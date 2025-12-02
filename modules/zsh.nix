@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   programs.zsh = {
@@ -45,16 +45,13 @@
       dstatus = "systemctl status docker --no-pager -l";
     };
     
-    # Zinit plugin manager setup
-    initExtraFirst = ''
-      # Powerlevel10k instant prompt
+    # Shell configuration with Zinit and all integrations
+    initContent = ''
+      # Powerlevel10k instant prompt (must be at the top)
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
-    '';
-    
-    # Shell functions and integrations
-    initExtra = ''
+      
       # Set the directory we want to store zinit and plugins
       ZINIT_HOME="''${XDG_DATA_HOME:-''${HOME}/.local/share}/zinit/zinit.git"
       

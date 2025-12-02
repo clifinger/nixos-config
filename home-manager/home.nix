@@ -2,20 +2,16 @@
 
 {
   imports = [
-    ./modules/kitty.nix
-    ./modules/zsh.nix
+    ../modules/kitty.nix
+    ../modules/zsh.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home.username = "julien";
   home.homeDirectory = "/home/julien";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  home.stateVersion = "24.05";
-
-  # Packages that should be installed to the user profile
+  # Let Home Manager install and manage itself
+  programs.home-manager.enable = true;
   home.packages = with pkgs; [
     # CLI tools
     eza           # Modern ls replacement
@@ -38,22 +34,19 @@
 
   # Font configuration
   fonts.fontconfig.enable = true;
-
-  # Let Home Manager install and manage itself
-  programs.home-manager.enable = true;
   
   # Git configuration (already set globally but good to have here)
   programs.git = {
     enable = true;
-    userName = "Julien Lenne";
-    userEmail = "contact.lenne@gmail.com";
-    signing = {
-      key = "2944C14E29F0B7A2";
-      signByDefault = true;
-    };
-    extraConfig = {
-      init.defaultBranch = "main";
+    settings = {
+      user = {
+        name = "Julien Lenne";
+        email = "contact.lenne@gmail.com";
+      };
+      commit.gpgsign = true;
       tag.gpgsign = true;
+      init.defaultBranch = "main";
+      user.signingkey = "2944C14E29F0B7A2";
     };
   };
   
@@ -62,6 +55,6 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-curses;
+    pinentry.package = pkgs.pinentry-curses;
   };
 }
