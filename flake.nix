@@ -47,6 +47,7 @@
                   imports = [ 
                     mangowc.hmModules.mango
                     dms.homeModules.dankMaterialShell.default
+                    ./home-manager/home.nix
                   ];
                   
                   # Configuration MangoWC avec raccourcis

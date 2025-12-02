@@ -85,9 +85,13 @@
     #  thunderbird
     ];
     
-    # Script de démarrage automatique de MangoWC au login
-    shell = pkgs.bash;
+    # Use zsh as default shell
+    shell = pkgs.zsh;
   };
+  
+  # Enable zsh system-wide
+  programs.zsh.enable = true;
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
