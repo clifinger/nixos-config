@@ -1,0 +1,16 @@
+# Fichiers temporaires
+*.swp
+*.swo
+*~
+.*.swp
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.gpg
+result
