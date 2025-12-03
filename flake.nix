@@ -98,6 +98,9 @@
                       # Échelle de l'écran (1.3x)
                       monitorrule=eDP-1,0.55,1,tile,0,1.3,0,0,2560,1600,60
                       
+                      # Window rules pour scratchpad
+                      windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,title:scratchpad-terminal
+                      
                       # ========== RACCOURCIS CLAVIER ==========
                       
                       # Reload MangoWC config
