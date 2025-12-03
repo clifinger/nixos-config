@@ -137,10 +137,10 @@
                       bind=SUPER,l,focusdir,right
                       bind=SUPER,k,focusdir,up
                       bind=SUPER,j,focusdir,down
-                      bind=SUPER,left,focusdir,left
-                      bind=SUPER,right,focusdir,right
-                      bind=SUPER,up,focusdir,up
-                      bind=SUPER,down,focusdir,down
+                      bind=SUPER,Left,focusdir,left
+                      bind=SUPER,Right,focusdir,right
+                      bind=SUPER,Up,focusdir,up
+                      bind=SUPER,Down,focusdir,down
                       
                       # Déplacer les fenêtres
                       bind=SUPER+SHIFT,h,exchange_client,left
