@@ -7,6 +7,7 @@ in
   imports = [
     ../modules/kitty.nix
     ../modules/zsh.nix
+    ../modules/neovim.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage
@@ -34,7 +35,7 @@ in
     nerd-fonts.symbols-only
     
     # Development tools
-    neovim
+    # neovim now configured in modules/neovim.nix
     
     # File manager
     nautilus      # GNOME file manager
