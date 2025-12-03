@@ -29,8 +29,12 @@
     sessionVariables = {
       EDITOR = "nvim";
       GPG_TTY = "$(tty)";
-      XCURSOR_SIZE = "36";  # 24 * 1.5 scale
+      XCURSOR_SIZE = "36";
     };
+    
+    envExtra = ''
+      export PATH="$HOME/.local/bin:$PATH"
+    '';
     
     # Shell aliases
     shellAliases = {
