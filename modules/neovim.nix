@@ -13,6 +13,10 @@
       gcc
       gnumake
       unzip
+      readline
+      
+      # Lua and LuaRocks for magick
+      lua51Packages.luarocks-nix
       
       # Search tools
       ripgrep
