@@ -80,7 +80,7 @@
       
       # Applications
       bind=SUPER,Return,spawn,kitty
-      bind=SUPER,b,spawn,chromium
+      bind=SUPER,b,spawn,google-chrome-stable
       bind=SUPER,e,spawn,nautilus
       
       # DankMaterialShell widgets

@@ -41,10 +41,13 @@
     shell = pkgs.zsh;
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     vim nano git wget curl
     github-cli github-copilot-cli
-    chromium kitty foot
+    google-chrome
+    kitty foot
     wl-clipboard wl-clip-persist cliphist wlr-randr
     bitwarden-cli jq gnupg openssh
     evtest alsa-utils

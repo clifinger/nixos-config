@@ -1,42 +1,36 @@
 #!/usr/bin/env bash
-# Script pour sauvegarder les clés SSH et GPG dans Bitwarden
-# Usage: ./backup-keys.sh
 
 set -e
 
-echo "💾 Sauvegarde des clés SSH et GPG dans Bitwarden"
-echo "================================================="
+echo "💾 Backing up SSH and GPG keys to Bitwarden"
+echo "============================================"
 echo ""
 
-# Vérifier que BW_SESSION est défini
 if [ -z "$BW_SESSION" ]; then
-    echo "❌ BW_SESSION n'est pas défini."
-    echo "Déverrouillez d'abord Bitwarden:"
+    echo "❌ BW_SESSION not set."
+    echo "Unlock Bitwarden first:"
     echo "  export BW_SESSION=\$(bw unlock --raw)"
     exit 1
 fi
 
-# Sauvegarder les clés SSH
 if [ -f ~/.ssh/id_ed25519 ]; then
-    echo "📤 Sauvegarde des clés SSH..."
+    echo "📤 Backing up SSH keys..."
     
-    # Vérifier si l'item existe déjà
     EXISTING_SSH=$(bw list items --search "SSH Keys Backup" 2>/dev/null | jq -r '.[0].id // empty')
     
     if [ -n "$EXISTING_SSH" ]; then
-        echo "⚠️  Une sauvegarde SSH existe déjà (ID: $EXISTING_SSH)"
-        read -p "Voulez-vous la remplacer? (y/N) " -n 1 -r
+        echo "⚠️  SSH backup already exists (ID: $EXISTING_SSH)"
+        read -p "Replace? (y/N) " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             bw delete item "$EXISTING_SSH" > /dev/null
         else
-            echo "⏭️  Sauvegarde SSH ignorée"
+            echo "⏭️  SSH backup skipped"
             SKIP_SSH=1
         fi
     fi
     
     if [ -z "$SKIP_SSH" ]; then
-        # Créer l'item
         SSH_PRIVATE=$(cat ~/.ssh/id_ed25519)
         SSH_PUBLIC=$(cat ~/.ssh/id_ed25519.pub)
         
@@ -64,36 +58,33 @@ EOF
         bw encode < /tmp/bw-ssh.json | bw create item > /dev/null
         rm /tmp/bw-ssh.json
         
-        echo "✅ Clés SSH sauvegardées"
+        echo "✅ SSH keys backed up"
     fi
 else
-    echo "⚠️  Aucune clé SSH trouvée (~/.ssh/id_ed25519)"
+    echo "⚠️  No SSH key found (~/.ssh/id_ed25519)"
 fi
 
-# Sauvegarder les clés GPG
 echo ""
 GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format=long 2>/dev/null | grep ^sec | tail -1 | sed 's/.*\/\([^ ]*\).*/\1/' || true)
 
 if [ -n "$GPG_KEY_ID" ]; then
-    echo "📤 Sauvegarde de la clé GPG ($GPG_KEY_ID)..."
+    echo "📤 Backing up GPG key ($GPG_KEY_ID)..."
     
-    # Vérifier si l'item existe déjà
     EXISTING_GPG=$(bw list items --search "GPG Key" 2>/dev/null | jq -r '.[0].id // empty')
     
     if [ -n "$EXISTING_GPG" ]; then
-        echo "⚠️  Une sauvegarde GPG existe déjà (ID: $EXISTING_GPG)"
-        read -p "Voulez-vous la remplacer? (y/N) " -n 1 -r
+        echo "⚠️  GPG backup already exists (ID: $EXISTING_GPG)"
+        read -p "Replace? (y/N) " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             bw delete item "$EXISTING_GPG" > /dev/null
         else
-            echo "⏭️  Sauvegarde GPG ignorée"
+            echo "⏭️  GPG backup skipped"
             SKIP_GPG=1
         fi
     fi
     
     if [ -z "$SKIP_GPG" ]; then
-        # Exporter la clé privée
         GPG_PRIVATE=$(gpg --armor --export-secret-keys "$GPG_KEY_ID" 2>/dev/null | sed 's/$/\\n/' | tr -d '\n')
         GPG_PUBLIC=$(gpg --armor --export "$GPG_KEY_ID" 2>/dev/null)
         
@@ -126,15 +117,15 @@ EOF
         bw encode < /tmp/bw-gpg.json | bw create item > /dev/null
         rm /tmp/bw-gpg.json
         
-        echo "✅ Clé GPG sauvegardée"
+        echo "✅ GPG key backed up"
     fi
 else
-    echo "⚠️  Aucune clé GPG trouvée"
+    echo "⚠️  No GPG key found"
 fi
 
 echo ""
-echo "✅ Sauvegarde terminée !"
+echo "✅ Backup complete"
 echo ""
-echo "🔄 Synchronisation avec le serveur..."
+echo "🔄 Syncing with server..."
 bw sync > /dev/null 2>&1
-echo "✅ Synchronisé"
+echo "✅ Synced"
