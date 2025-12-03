@@ -46,7 +46,9 @@
   environment.systemPackages = with pkgs; [
     vim nano git wget curl
     github-cli github-copilot-cli
-    chromium
+    (chromium.override {
+      enableWideVine = true;
+    })
     kitty foot
     wl-clipboard wl-clip-persist cliphist wlr-randr
     bitwarden-cli jq gnupg openssh
