@@ -31,6 +31,9 @@
       cargo
       rustc
       
+      # Image preview for Telescope
+      ueberzugpp
+      
       # Version manager for additional tools
       mise
     ];
