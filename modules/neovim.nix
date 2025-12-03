@@ -12,6 +12,7 @@
       # Build essentials
       gcc
       gnumake
+      unzip
       
       # Search tools
       ripgrep
@@ -23,7 +24,14 @@
       # Tree-sitter
       tree-sitter
       
-      # Version manager for tools
+      # Runtimes needed by Mason
+      nodejs
+      python3
+      go
+      cargo
+      rustc
+      
+      # Version manager for additional tools
       mise
     ];
   };
