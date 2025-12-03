@@ -20,7 +20,7 @@
       # Language servers (LSP)
       # Python
       pyright
-      ruff-lsp
+      ruff
       
       # JavaScript/TypeScript
       typescript
