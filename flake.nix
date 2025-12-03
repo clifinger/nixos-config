@@ -187,10 +187,6 @@
                       bind=SUPER+SHIFT,8,tag,8,0
                       bind=SUPER+SHIFT,9,tag,9,0
                       
-                      # Navigation workspaces
-                      bind=SUPER,Left,viewtoleft,0
-                      bind=SUPER,Right,viewtoright,0
-                      
                       # Souris
                       mousebind=SUPER,btn_left,moveresize,curmove
                       mousebind=SUPER,btn_right,moveresize,curresize
