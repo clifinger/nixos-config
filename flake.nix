@@ -109,9 +109,6 @@
                       # KITTY TERMINAL - Super+Enter
                       bind=SUPER,Return,spawn,kitty
                       
-                      # TERMINAL SCRATCHPAD - Alt+z toggle scratchpad
-                      bind=ALT,z,toggle_scratchpad
-                      
                       # CHROMIUM - Super+b (b pour browser)
                       bind=SUPER,b,spawn,chromium
                       
@@ -179,6 +176,9 @@
                       bind=SUPER,space,togglefloating,
                       bind=SUPER,m,togglemaximizescreen,
                       bind=SUPER,o,toggleoverview,
+                      
+                      # Scratchpad - Alt+z pour terminal scratchpad
+                      bind=ALT,z,toggle_named_scratchpad,scratchpad-terminal,scratchpad-terminal,kitty --title scratchpad-terminal
                       
                       # Workspaces (tags)
                       bind=SUPER,0,view,0,0
