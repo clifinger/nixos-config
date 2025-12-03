@@ -54,6 +54,9 @@
       confirm_os_window_close = 0;
       copy_on_select = true;
       
+      # Disable enhanced keyboard protocol (causes issues with ThinkPad Fn keys)
+      kitty_mod = "ctrl+shift";
+      
       # Layouts (using niri for tiling)
       enabled_layouts = "Tall, *";
       
@@ -63,11 +66,7 @@
     };
     
     # Keybindings optimized for tiling WM usage
-    keybindings = {
-      # Quick actions
-      "f1" = "new_window_with_cwd";
-      "f2" = "launch --cwd=current nvim .";
-      
+    keybindings = {      
       # Window navigation (minimal - let niri handle most)
       "ctrl+shift+]" = "next_window";
       "ctrl+shift+[" = "previous_window";
@@ -80,6 +79,11 @@
       "ctrl+shift+r" = "no_op";
       "ctrl+shift+l" = "no_op";
       "ctrl+shift+q" = "no_op";
+      
+      # Allow function keys to pass through (for ThinkPad Fn keys)
+      "f1" = "no_op";
+      "f2" = "no_op";
+      "f3" = "no_op";
     };
     
     # Theme: Dynamic from DMS
@@ -90,6 +94,9 @@
       # ===== Cursor Trail Effect =====
       cursor_trail 1
       cursor_trail_decay 0.1 0.4
+      
+      # Use legacy keyboard mode (disable CSI u mode that breaks Fn keys)
+      map ctrl+shift+u no_op
     '';
   };
 }

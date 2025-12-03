@@ -14,8 +14,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use Xanmod kernel.
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -79,6 +79,33 @@
     powerOnBoot = true;
   };
   services.blueman.enable = true;
+  
+  # ThinkPad specific settings
+  boot.kernelModules = [ "thinkpad_acpi" ];
+  boot.extraModprobeConfig = ''
+    options thinkpad_acpi fan_control=1 hotkey=1
+  '';
+  
+  # Fix ThinkPad hotkeys mask
+  systemd.services.thinkpad-hotkeys = {
+    description = "Enable all ThinkPad hotkeys";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-modules-load.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 0xff8c7ffb > /sys/devices/platform/thinkpad_acpi/hotkey_mask'";
+      RemainAfterExit = true;
+    };
+  };
+  
+  # fwupd pour mettre à jour les firmwares
+  services.fwupd.enable = true;
+
+  # ACPI n'est pas nécessaire sur les systèmes modernes (événements via input layer)
+  # services.acpid.enable = true;
+  
+  # UPower pour la gestion de la batterie (requis pour DankMaterialShell)
+  services.upower.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -123,6 +150,10 @@
    jq
    gnupg
    openssh
+   # Debugging clavier
+   evtest
+   # Audio utilities
+   alsa-utils
   ];
 
   # Enable Flakes
@@ -130,6 +161,15 @@
   
   # Sudo sans mot de passe pour le groupe wheel
   security.sudo.wheelNeedsPassword = false;
+  
+  # Règle sudo pour le contrôle de la LED micmute
+  security.sudo.extraRules = [{
+    users = [ "julien" ];
+    commands = [{
+      command = "/run/current-system/sw/bin/tee /sys/class/leds/platform\\:\\:micmute/brightness";
+      options = [ "NOPASSWD" ];
+    }];
+  }];
   
   # Polkit pour DankMaterialShell
   security.polkit.enable = true;

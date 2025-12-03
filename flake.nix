@@ -161,6 +161,14 @@
                       bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" /home/julien/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
                       bind=SUPER+SHIFT,Print,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
                       
+                      # Touches multimédia (volume et luminosité) - Fn+F1, Fn+F2, etc.
+                      bind=none,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                      bind=none,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                      bind=none,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                      bind=none,XF86AudioMicMute,spawn_shell,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && (wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo 1 || echo 0) | sudo tee /sys/class/leds/platform::micmute/brightness > /dev/null
+                      bind=none,XF86MonBrightnessUp,spawn,brightnessctl set 5%+
+                      bind=none,XF86MonBrightnessDown,spawn,brightnessctl set 5%-
+                      
                       # États des fenêtres
                       bind=SUPER,f,togglefullscreen,
                       bind=SUPER,space,togglefloating,
@@ -208,6 +216,12 @@
                     '';
                     
                     autostart_sh = ''
+                      # Attendre que PipeWire soit prêt
+                      for i in {1..30}; do
+                        wpctl status &>/dev/null && break
+                        sleep 0.2
+                      done
+                      
                       # Démarrer DankMaterialShell
                       dms run &
                     '';
