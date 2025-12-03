@@ -100,8 +100,11 @@
                       
                       # ========== RACCOURCIS CLAVIER ==========
                       
-                      # Reload config
+                      # Reload MangoWC config
                       bind=SUPER,r,reload_config
+                      
+                      # Restart DankMaterialShell
+                      bind=SUPER+SHIFT,r,spawn,dms restart
                       
                       # KITTY TERMINAL - Super+Enter
                       bind=SUPER,Return,spawn,kitty
