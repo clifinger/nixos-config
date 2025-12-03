@@ -155,9 +155,8 @@
                       bind=SUPER+SHIFT,Up,exchange_client,up
                       bind=SUPER+SHIFT,Down,exchange_client,down
                       
-                      # Layouts
+                      # Layouts - Super+N cycle tous les modes
                       bind=SUPER,n,switch_layout
-                      bind=SUPER,s,setlayout,scroller
                       
                       # Screenshots
                       bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim /home/julien/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
@@ -206,16 +205,16 @@
                       mousebind=SUPER,btn_left,moveresize,curmove
                       mousebind=SUPER,btn_right,moveresize,curresize
                       
-                      # Layouts
-                      tagrule=id:1,layout_name:tile
-                      tagrule=id:2,layout_name:tile
-                      tagrule=id:3,layout_name:tile
-                      tagrule=id:4,layout_name:tile
-                      tagrule=id:5,layout_name:tile
-                      tagrule=id:6,layout_name:tile
-                      tagrule=id:7,layout_name:tile
-                      tagrule=id:8,layout_name:tile
-                      tagrule=id:9,layout_name:tile
+                      # Layouts par défaut - Scroller pour tous les workspaces
+                      tagrule=id:1,layout_name:scroller
+                      tagrule=id:2,layout_name:scroller
+                      tagrule=id:3,layout_name:scroller
+                      tagrule=id:4,layout_name:scroller
+                      tagrule=id:5,layout_name:scroller
+                      tagrule=id:6,layout_name:scroller
+                      tagrule=id:7,layout_name:scroller
+                      tagrule=id:8,layout_name:scroller
+                      tagrule=id:9,layout_name:scroller
                     '';
                     
                     autostart_sh = ''
