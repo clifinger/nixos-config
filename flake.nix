@@ -130,6 +130,9 @@
                       # Control Center DMS - Super+Shift+c
                       bind=SUPER+SHIFT,c,spawn,dms ipc call controlcenter toggle
                       
+                      # Lock Screen - Super+l
+                      bind=SUPER,l,spawn,dms ipc call lock lock
+                      
                       # Fermer une fenêtre (killclient)
                       bind=SUPER,q,killclient,
                       bind=SUPER,w,killclient,
@@ -139,8 +142,6 @@
                       
                       # Navigation entre fenêtres
                       bind=SUPER,Tab,focusstack,next
-                      bind=SUPER,h,focusdir,left
-                      bind=SUPER,l,focusdir,right
                       bind=SUPER,k,focusdir,up
                       bind=SUPER,j,focusdir,down
                       bind=SUPER,Left,focusdir,left
@@ -149,8 +150,6 @@
                       bind=SUPER,Down,focusdir,down
                       
                       # Déplacer les fenêtres
-                      bind=SUPER+SHIFT,h,exchange_client,left
-                      bind=SUPER+SHIFT,l,exchange_client,right
                       bind=SUPER+SHIFT,k,exchange_client,up
                       bind=SUPER+SHIFT,j,exchange_client,down
                       bind=SUPER+SHIFT,Left,exchange_client,left
