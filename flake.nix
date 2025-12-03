@@ -88,23 +88,45 @@
                       xkb_rules_layout=us
                       
                       # Curseur (taille de base, sera automatiquement scalé à 36 par le monitorrule)
-                      cursor_size=24
-                      cursor_theme=Adwaita
-                      env=XCURSOR_SIZE,24
-                      env=XCURSOR_THEME,Adwaita
-                      env=GDK_SCALE,1.3
-                      env=QT_SCALE_FACTOR,1.3
+                      # cursor_size=24
+                      # cursor_theme=Adwaita
+                      # env=XCURSOR_SIZE,24
+                      # env=XCURSOR_THEME,Adwaita
+                      # env=GDK_SCALE,1.3
+                      # env=QT_SCALE_FACTOR,1.3
                       
-                      # Échelle de l'écran (1.3x)
-                      monitorrule=eDP-1,0.55,1,tile,0,1.3,0,0,2560,1600,60
+                      # Scroller layout settings
+                      scroller_default_proportion=0.8
+                      scroller_focus_center=0
+                      scroller_prefer_center=0
+                      scroller_proportion_preset=0.5,0.8,1.0
+                      
+                      # Multi-moniteur settings
+                      focus_cross_monitor=1
+                      warpcursor=1
+                      sloppyfocus=1
+                      
+                      # Configuration multi-moniteurs
+                      # Format: name,mfact,nmaster,layout,transform,scale,x,y,width,height,refreshrate
+                      
+                      # Écran intégré (gauche) : 2560x1600 @ 1.3 scale = ~1969 px effectifs
+                      monitorrule=eDP-1,0.55,1,scroller,0,1.3,0,0,2560,1600,60
+                      
+                      # HP Z27n (centre) : 2560x1440 @ scale 1.0, positionné à droite de eDP-1
+                      # Position X : 1969 (largeur effective de eDP-1)
+                      monitorrule=DP-4,0.55,1,scroller,0,1.0,1969,0,2560,1440,60
+                      
+                      # Xiaomi 4K (droite) : 3840x2160 @ scale 1.5 = 2560 px effectifs, positionné à droite de DP-4
+                      # Position X : 1969 + 2560 = 4529
+                      monitorrule=DP-6,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
                       
                       # Window rules pour scratchpad
                       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
                       
                       # ========== RACCOURCIS CLAVIER ==========
                       
-                      # Reload MangoWC config
-                      bind=SUPER,r,reload_config
+                      # Reload MangoWC config et force scroller layout
+                      bind=SUPER,r,spawn_shell,mmsg -d reload_config && sleep 0.2 && mmsg -d setlayout,scroller
                       
                       # Restart DankMaterialShell
                       bind=SUPER+SHIFT,r,spawn,dms restart
@@ -124,41 +146,52 @@
                       # Launcher DMS - Alt+space
                       bind=ALT,space,spawn,dms ipc call spotlight toggle
                       
-                      # Settings DMS - Super+s
-                      bind=SUPER,s,spawn,dms ipc call settings toggle
+                      # Clipboard Manager DMS - Super+v
+                      bind=SUPER,v,spawn,dms ipc call clipboard toggle
                       
-                      # Control Center DMS - Super+Shift+c
-                      bind=SUPER+SHIFT,c,spawn,dms ipc call controlcenter toggle
-                      
-                      # Lock Screen - Super+l
-                      bind=SUPER,l,spawn,dms ipc call lock lock
+                      # Power Menu - Super+Backspace
+                      bind=SUPER,BackSpace,spawn,dms ipc call powermenu toggle
                       
                       # Fermer une fenêtre (killclient)
                       bind=SUPER,q,killclient,
-                      bind=SUPER,w,killclient,
-                      
-                      # Quitter MangoWC (SUPER+SHIFT+q)
-                      bind=SUPER+SHIFT,q,quit
                       
                       # Navigation entre fenêtres
                       bind=SUPER,Tab,focusstack,next
-                      bind=SUPER,k,focusdir,up
-                      bind=SUPER,j,focusdir,down
                       bind=SUPER,Left,focusdir,left
                       bind=SUPER,Right,focusdir,right
                       bind=SUPER,Up,focusdir,up
                       bind=SUPER,Down,focusdir,down
                       
                       # Déplacer les fenêtres
-                      bind=SUPER+SHIFT,k,exchange_client,up
-                      bind=SUPER+SHIFT,j,exchange_client,down
                       bind=SUPER+SHIFT,Left,exchange_client,left
                       bind=SUPER+SHIFT,Right,exchange_client,right
                       bind=SUPER+SHIFT,Up,exchange_client,up
                       bind=SUPER+SHIFT,Down,exchange_client,down
                       
-                      # Layouts - Super+N cycle tous les modes
-                      bind=SUPER,n,switch_layout
+                      # Redimensionner les fenêtres flottantes (Ctrl+Super+Flèches)
+                      bind=CTRL+SUPER,Left,smartresizewin,left
+                      bind=CTRL+SUPER,Right,smartresizewin,right
+                      bind=CTRL+SUPER,Up,smartresizewin,up
+                      bind=CTRL+SUPER,Down,smartresizewin,down
+                      
+                      # Redimensionner les fenêtres flottantes par steps (Super +/-)
+                      bind=SUPER,equal,resizewin,80,80
+                      bind=SUPER,minus,resizewin,-80,-80
+                      
+                      # Déplacer les fenêtres flottantes (Alt+Super+Flèches)
+                      bind=ALT+SUPER,Left,smartmovewin,left
+                      bind=ALT+SUPER,Right,smartmovewin,right
+                      bind=ALT+SUPER,Up,smartmovewin,up
+                      bind=ALT+SUPER,Down,smartmovewin,down
+                      
+                      # Layouts - Seulement tile et scroller
+                      # Super+S reste scroller layout (garde l'ancien binding)
+                      bind=SUPER,s,setlayout,scroller
+                      # Super+N = basculer entre tile et scroller
+                      bind=SUPER,n,spawn,/home/julien/.config/mango/toggle-layout.sh
+                      
+                      # Raccourcis scroller - ajuster les proportions
+                      bind=SUPER,0,switch_proportion_preset
                       
                       # Screenshots
                       bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim /home/julien/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
@@ -174,13 +207,30 @@
                       bind=none,XF86MonBrightnessDown,spawn,brightnessctl set 5%-
                       
                       # États des fenêtres
-                      bind=SUPER,f,togglefullscreen,
+                      bind=SUPER,f,togglefloating,
                       bind=SUPER,space,togglefloating,
-                      bind=SUPER,m,togglemaximizescreen,
+                      bind=SUPER,m,setlayout,monocle
+                      bind=SUPER+SHIFT,m,togglefullscreen,
                       bind=SUPER,o,toggleoverview,
                       
                       # Scratchpad - Alt+z pour terminal scratchpad
                       bind=ALT,z,toggle_named_scratchpad,scratchpad-term,none,kitty --class scratchpad-term
+                      
+                      # Navigation entre moniteurs avec PgUp/PgDn
+                      # PgUp = code:112 (Linux 104+8), PgDn = code:117 (Linux 109+8)
+                      bind=SUPER,code:112,focusmon,left
+                      bind=SUPER,code:117,focusmon,right
+                      
+                      # Déplacer fenêtre vers un autre moniteur avec Shift+PgUp/PgDn
+                      bind=SUPER+SHIFT,code:112,tagmon,left,0
+                      bind=SUPER+SHIFT,code:117,tagmon,right,0
+                      
+                      # Lock Screen - Super+l (après SUPER+CTRL+l pour priorité)
+                      bind=SUPER,l,spawn,dms ipc call lock lock
+                      
+                      # Gestures pavé tactile - 3 doigts pour scroller horizontalement
+                      gesturebind=none,left,3,focusstack,prev
+                      gesturebind=none,right,3,focusstack,next
                       
                       # Workspaces (tags)
                       bind=SUPER,0,view,0,0
@@ -210,7 +260,7 @@
                       mousebind=SUPER,btn_left,moveresize,curmove
                       mousebind=SUPER,btn_right,moveresize,curresize
                       
-                      # Layouts par défaut - Scroller pour tous les workspaces
+                      # Layouts par défaut - Tile (master) pour tous les workspaces
                       tagrule=id:1,layout_name:scroller
                       tagrule=id:2,layout_name:scroller
                       tagrule=id:3,layout_name:scroller
@@ -229,9 +279,35 @@
                         sleep 0.2
                       done
                       
+                      # XDG Desktop Portal pour screenshare/screen record (Google Meet, OBS, etc.)
+                      dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots &
+                      
+                      # Clipboard persistence (garde le contenu du clipboard après fermeture d'app)
+                      wl-clip-persist --clipboard regular --reconnect-tries 0 &
+                      
+                      # Clipboard history manager (accessible via DMS clipboard widget)
+                      wl-paste --type text --watch cliphist store &
+                      
                       # Démarrer DankMaterialShell
                       dms run &
                     '';
+                  };
+                  
+                  # Script toggle-layout pour mango
+                  home.file.".config/mango/toggle-layout.sh" = {
+                    text = ''
+                      #!/usr/bin/env bash
+                      # Bascule entre tile et scroller
+                      
+                      current=$(mmsg -g | grep "layout" | grep -v "kb_layout" | head -1 | awk '{print $3}')
+                      
+                      if [ "$current" = "S" ]; then
+                          mmsg -d setlayout,tile
+                      else
+                          mmsg -d setlayout,scroller
+                      fi
+                    '';
+                    executable = true;
                   };
                   
                   # Activer DankMaterialShell

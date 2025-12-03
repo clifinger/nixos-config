@@ -144,6 +144,8 @@
    foot
    # Outils pour Wayland
    wl-clipboard
+   wl-clip-persist
+   cliphist
    wlr-randr
    # Outils pour la gestion des clés
    bitwarden-cli
@@ -177,11 +179,18 @@
   # Enable dbus
   services.dbus.enable = true;
   
-  # XDG Portal pour Wayland
+  # XDG Portal pour Wayland (pour screenshare, file picker, etc.)
   xdg.portal = {
     enable = true;
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config = {
+      common = {
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+      };
+    };
   };
 
   # Configuration pour démarrer MangoWC automatiquement
