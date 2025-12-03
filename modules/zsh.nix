@@ -4,10 +4,13 @@
   programs.zsh = {
     enable = true;
     
+    # Completion configuration
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
     
+    # History configuration
     history = {
       size = 5000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -15,19 +18,23 @@
       ignoreAllDups = true;
       ignoreSpace = true;
       share = true;
+      save = 5000;
+      extended = true;
     };
     
-    historySubstringSearch.enable = true;
+    # Default options
+    defaultKeymap = "emacs";
     
     # Environment variables
     sessionVariables = {
       EDITOR = "nvim";
       GPG_TTY = "$(tty)";
+      XCURSOR_SIZE = "36";  # 24 * 1.5 scale
     };
     
-    # Aliases
+    # Shell aliases
     shellAliases = {
-      # General
+      # Modern CLI replacements
       ls = "eza -a --icons=always";
       ll = "eza -al --icons=always";
       lt = "eza -a --tree --level=1 --icons=always";
@@ -36,54 +43,54 @@
       c = "clear";
       man = "tldr";
       
-      # System
+      # System management
       shutdown = "systemctl poweroff";
       
-      # Docker power management
+      # Docker power management (optional scripts)
       don = "~/.local/bin/don";
       doff = "~/.local/bin/doff";
       dstatus = "systemctl status docker --no-pager -l";
     };
     
-    # Shell configuration with Zinit and all integrations
-    initContent = ''
-      # Powerlevel10k instant prompt (must be at the top)
+    # Additional shell configuration
+    initExtra = ''
+      # Powerlevel10k instant prompt
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
       
-      # Set the directory we want to store zinit and plugins
+      # Zinit plugin manager setup
       ZINIT_HOME="''${XDG_DATA_HOME:-''${HOME}/.local/share}/zinit/zinit.git"
       
-      # Download Zinit, if it's not there yet
       if [ ! -d "$ZINIT_HOME" ]; then
          mkdir -p "$(dirname $ZINIT_HOME)"
          git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
       fi
       
-      # Source/Load zinit
       source "''${ZINIT_HOME}/zinit.zsh"
       
-      # Add in Powerlevel10k
+      # Powerlevel10k theme
       zinit ice depth=1; zinit light romkatv/powerlevel10k
       
-      # Add in zsh plugins
+      # Essential zsh plugins
       zinit light zsh-users/zsh-syntax-highlighting
       zinit light zsh-users/zsh-completions
       zinit light zsh-users/zsh-autosuggestions
       zinit light Aloxaf/fzf-tab
       
-      # Add in snippets
+      # Oh-My-Zsh snippets
       zinit snippet OMZL::git.zsh
       zinit snippet OMZP::git
       zinit snippet OMZP::sudo
       zinit snippet OMZP::command-not-found
       
-      # Load completions
+      # Reload completions
       autoload -Uz compinit && compinit
       zinit cdreplay -q
       
-      # Git wrapper to launch lazygit when no args
+      # Custom functions
+      
+      # Git wrapper: launch lazygit when called without arguments
       git() {
         if [ -z "$1" ]; then
           lazygit
@@ -92,7 +99,7 @@
         fi
       }
       
-      # Docker wrapper to launch lazydocker when no args
+      # Docker wrapper: launch lazydocker when called without arguments
       docker() {
         if [ -z "$1" ]; then
           lazydocker
@@ -101,7 +108,7 @@
         fi
       }
       
-      # Neovim wrapper to adjust kitty padding
+      # Neovim wrapper: adjust kitty padding dynamically
       nvim() {
         kitty @ set-spacing padding=0 margin=0 2>/dev/null || true
         command nvim "$@"
@@ -109,7 +116,6 @@
       }
       
       # Keybindings
-      bindkey -e
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
       bindkey '^[w' kill-region
@@ -119,29 +125,25 @@
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
       zstyle ':completion:*' menu no
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-      zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --icons $realpath 2>/dev/null || ls --color $realpath'
+      zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --color=always --icons $realpath 2>/dev/null || ls --color $realpath'
       
       # Shell integrations
       eval "$(fzf --zsh)"
       eval "$(zoxide init --cmd cd zsh)"
-      
-      # Mise activation
       eval "$(mise activate zsh)"
       
-      # Load p10k config
+      # Load Powerlevel10k configuration
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       
-      # Fastfetch on terminal start
+      # Display fastfetch on new terminal
       if [[ $(tty) == *"pts"* ]]; then
-        fastfetch --config examples/13 --logo nixos 2>/dev/null || fastfetch
+        fastfetch --config examples/13 --logo nixos 2>/dev/null || fastfetch 2>/dev/null || true
       fi
     '';
   };
   
-  # Ensure zsh is the default shell
-  home.sessionVariables = {
-    SHELL = "${pkgs.zsh}/bin/zsh";
-  };
+  # XDG directories
+  xdg.enable = true;
 }
 

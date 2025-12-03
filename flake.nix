@@ -87,23 +87,49 @@
                       repeat_delay=600
                       xkb_rules_layout=us
                       
+                      # Curseur (taille de base, sera automatiquement scalé à 36 par le monitorrule)
+                      cursor_size=24
+                      cursor_theme=Adwaita
+                      env=XCURSOR_SIZE,24
+                      env=XCURSOR_THEME,Adwaita
+                      env=GDK_SCALE,1.3
+                      env=QT_SCALE_FACTOR,1.3
+                      
+                      # Échelle de l'écran (1.3x)
+                      monitorrule=eDP-1,0.55,1,tile,0,1.3,0,0,2560,1600,60
+                      
                       # ========== RACCOURCIS CLAVIER ==========
                       
                       # Reload config
                       bind=SUPER,r,reload_config
                       
-                      # KITTY TERMINAL - Super+Return (raccourci principal)
+                      # KITTY TERMINAL - Super+Enter
                       bind=SUPER,Return,spawn,kitty
                       
                       # CHROMIUM - Super+b (b pour browser)
                       bind=SUPER,b,spawn,chromium
                       
-                      # Launcher DMS
-                      bind=SUPER,d,spawn,dms ipc call spotlight toggle
+                      # NAUTILUS - Super+e (e pour explorer)
+                      bind=SUPER,e,spawn,nautilus
                       
-                      # Quitter et fermer
-                      bind=SUPER,q,quit
-                      bind=SUPER,c,killclient,
+                      # Dashboard DMS - Super+d (overview tab)
+                      bind=SUPER,d,spawn,dms ipc call dash toggle overview
+                      
+                      # Launcher DMS - Alt+space
+                      bind=ALT,space,spawn,dms ipc call spotlight toggle
+                      
+                      # Settings DMS - Super+s
+                      bind=SUPER,s,spawn,dms ipc call settings toggle
+                      
+                      # Control Center DMS - Super+Shift+c
+                      bind=SUPER+SHIFT,c,spawn,dms ipc call controlcenter toggle
+                      
+                      # Fermer une fenêtre (killclient)
+                      bind=SUPER,q,killclient,
+                      bind=SUPER,w,killclient,
+                      
+                      # Quitter MangoWC (SUPER+SHIFT+q)
+                      bind=SUPER+SHIFT,q,quit
                       
                       # Navigation entre fenêtres
                       bind=SUPER,Tab,focusstack,next
@@ -117,6 +143,15 @@
                       bind=SUPER+SHIFT,l,exchange_client,right
                       bind=SUPER+SHIFT,k,exchange_client,up
                       bind=SUPER+SHIFT,j,exchange_client,down
+                      
+                      # Layouts
+                      bind=SUPER,n,switch_layout
+                      bind=SUPER,s,setlayout,scroller
+                      
+                      # Screenshots
+                      bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim /home/julien/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
+                      bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" /home/julien/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
+                      bind=SUPER+SHIFT,Print,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
                       
                       # États des fenêtres
                       bind=SUPER,f,togglefullscreen,
@@ -167,6 +202,9 @@
                     '';
                     
                     autostart_sh = ''
+                      # Configurer le scale de l'écran
+                      wlr-randr --output eDP-1 --scale 1.5 &
+                      
                       # Démarrer DankMaterialShell
                       dms run &
                     '';
@@ -177,8 +215,6 @@
                     enable = true;
                     systemd.enable = true;
                   };
-                  
-                  home.stateVersion = "25.11";
                 };
               };
             }
