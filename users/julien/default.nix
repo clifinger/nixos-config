@@ -45,9 +45,9 @@ in
 
       shellHook = '''
         if [ -n "$ZSH_VERSION" ]; then
-          export PROMPT="%F{green}[haskell]%f $PROMPT"
+          export PROMPT="%F{cyan}via%f %F{green}λ haskell%f $PROMPT"
         elif [ -n "$BASH_VERSION" ]; then
-          export PS1="\[\033[1;32m\][haskell]\[\033[0m\] $PS1"
+          export PS1="\[\033[1;36m\]via\[\033[0m\] \[\033[1;32m\]λ haskell\[\033[0m\] $PS1"
         fi
         
         echo "Haskell development environment"
