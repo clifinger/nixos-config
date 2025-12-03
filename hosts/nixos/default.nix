@@ -46,7 +46,7 @@
   environment.systemPackages = with pkgs; [
     vim nano git wget curl
     github-cli github-copilot-cli
-    google-chrome
+    chromium
     kitty foot
     wl-clipboard wl-clip-persist cliphist wlr-randr
     bitwarden-cli jq gnupg openssh
