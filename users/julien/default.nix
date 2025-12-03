@@ -44,7 +44,11 @@ in
       ];
 
       shellHook = '''
-        export PS1="\[\033[1;32m\][haskell]\[\033[0m\] $PS1"
+        if [ -n "$ZSH_VERSION" ]; then
+          export PROMPT="%F{green}[haskell]%f $PROMPT"
+        elif [ -n "$BASH_VERSION" ]; then
+          export PS1="\[\033[1;32m\][haskell]\[\033[0m\] $PS1"
+        fi
         
         echo "Haskell development environment"
         echo "=============================="
@@ -61,7 +65,7 @@ in
     executable = true;
     text = ''
       #!/usr/bin/env bash
-      nix-shell ~/.config/nix-shells/haskell.nix "$@"
+      nix-shell ~/.config/nix-shells/haskell.nix --run $SHELL
     '';
   };
 
