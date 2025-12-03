@@ -33,6 +33,7 @@
       
       # Image preview for Telescope
       ueberzugpp
+      imagemagick
       
       # Version manager for additional tools
       mise
