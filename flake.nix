@@ -181,7 +181,7 @@
                       bind=SUPER,o,toggleoverview,
                       
                       # Scratchpad - Alt+z pour terminal scratchpad
-                      bind=ALT,z,toggle_named_scratchpad,scratchpad-term,scratchpad-term,kitty --class scratchpad-term
+                      bind=ALT,z,toggle_named_scratchpad,scratchpad-term,none,kitty --class scratchpad-term
                       
                       # Workspaces (tags)
                       bind=SUPER,0,view,0,0
