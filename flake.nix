@@ -99,7 +99,7 @@
                       monitorrule=eDP-1,0.55,1,tile,0,1.3,0,0,2560,1600,60
                       
                       # Window rules pour scratchpad
-                      windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,title:scratchpad-terminal
+                      windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
                       
                       # ========== RACCOURCIS CLAVIER ==========
                       
@@ -181,7 +181,7 @@
                       bind=SUPER,o,toggleoverview,
                       
                       # Scratchpad - Alt+z pour terminal scratchpad
-                      bind=ALT,z,toggle_named_scratchpad,scratchpad-terminal,scratchpad-terminal,kitty --title scratchpad-terminal
+                      bind=ALT,z,toggle_named_scratchpad,scratchpad-term,scratchpad-term,kitty --class scratchpad-term
                       
                       # Workspaces (tags)
                       bind=SUPER,0,view,0,0
