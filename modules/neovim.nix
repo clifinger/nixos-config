@@ -17,47 +17,14 @@
       ripgrep
       fd
       
-      # Language servers (LSP)
-      # Python
-      pyright
-      ruff
-      
-      # JavaScript/TypeScript
-      typescript
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted # HTML/CSS/JSON
-      tailwindcss-language-server
-      
-      # Rust
-      rust-analyzer
-      
-      # Zig
-      zls
-      
-      # Go
-      gopls
-      delve # Go debugger
-      
-      # YAML/TOML
-      yaml-language-server
-      taplo # TOML LSP
-      
-      # Markdown
-      marksman
-      
-      # Lua
-      lua-language-server
-      stylua
-      
-      # Formatters and linters
-      nodePackages.prettier
-      black
-      isort
-      shfmt
-      
-      # Tools
+      # Git UI
       lazygit
+      
+      # Tree-sitter
       tree-sitter
+      
+      # Version manager for tools
+      mise
     ];
   };
   
