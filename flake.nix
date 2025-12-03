@@ -109,6 +109,9 @@
                       # KITTY TERMINAL - Super+Enter
                       bind=SUPER,Return,spawn,kitty
                       
+                      # TERMINAL SCRATCHPAD - Alt+z toggle scratchpad
+                      bind=ALT,z,toggle_scratchpad
+                      
                       # CHROMIUM - Super+b (b pour browser)
                       bind=SUPER,b,spawn,chromium
                       
