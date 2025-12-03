@@ -87,7 +87,7 @@
   users.users.julien = {
     isNormalUser = true;
     description = "Julien Lenne";
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "seat" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "input" "seat" "docker" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -160,6 +160,12 @@
   
   # DConf for GTK settings
   programs.dconf.enable = true;
+
+  # Docker
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;  # Start manually with systemctl start docker
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
