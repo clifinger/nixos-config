@@ -28,6 +28,43 @@ in
     nautilus grim slurp wl-clipboard libnotify
   ];
 
+  home.file.".config/nix-shells/haskell.nix".text = ''
+    { pkgs ? import <nixpkgs> {} }:
+
+    pkgs.mkShell {
+      buildInputs = with pkgs; [
+        ghc
+        cabal-install
+        haskell-language-server
+        haskellPackages.fourmolu
+        haskellPackages.hlint
+        haskellPackages.hoogle
+        zlib
+        pkg-config
+      ];
+
+      shellHook = '''
+        export PS1="\[\033[1;32m\][haskell]\[\033[0m\] $PS1"
+        
+        echo "Haskell development environment"
+        echo "=============================="
+        echo "GHC:   $(ghc --numeric-version)"
+        echo "Cabal: $(cabal --numeric-version)"
+        echo ""
+        echo "Tools: ghc, cabal, hls, fourmolu, hlint, hoogle"
+        echo ""
+      ''';
+    }
+  '';
+
+  home.file.".local/bin/haskell-shell" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      nix-shell ~/.config/nix-shells/haskell.nix "$@"
+    '';
+  };
+
   fonts.fontconfig.enable = true;
   dconf.enable = true;
   
