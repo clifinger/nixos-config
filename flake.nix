@@ -137,6 +137,10 @@
                       bind=SUPER,l,focusdir,right
                       bind=SUPER,k,focusdir,up
                       bind=SUPER,j,focusdir,down
+                      bind=SUPER,left,focusdir,left
+                      bind=SUPER,right,focusdir,right
+                      bind=SUPER,up,focusdir,up
+                      bind=SUPER,down,focusdir,down
                       
                       # Déplacer les fenêtres
                       bind=SUPER+SHIFT,h,exchange_client,left
@@ -160,6 +164,7 @@
                       bind=SUPER,o,toggleoverview,
                       
                       # Workspaces (tags)
+                      bind=SUPER,0,view,0,0
                       bind=SUPER,1,view,1,0
                       bind=SUPER,2,view,2,0
                       bind=SUPER,3,view,3,0
@@ -171,6 +176,7 @@
                       bind=SUPER,9,view,9,0
                       
                       # Déplacer vers workspace
+                      bind=SUPER+SHIFT,0,tag,0,0
                       bind=SUPER+SHIFT,1,tag,1,0
                       bind=SUPER+SHIFT,2,tag,2,0
                       bind=SUPER+SHIFT,3,tag,3,0
