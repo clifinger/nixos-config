@@ -147,6 +147,10 @@
                       bind=SUPER+SHIFT,l,exchange_client,right
                       bind=SUPER+SHIFT,k,exchange_client,up
                       bind=SUPER+SHIFT,j,exchange_client,down
+                      bind=SUPER+SHIFT,Left,exchange_client,left
+                      bind=SUPER+SHIFT,Right,exchange_client,right
+                      bind=SUPER+SHIFT,Up,exchange_client,up
+                      bind=SUPER+SHIFT,Down,exchange_client,down
                       
                       # Layouts
                       bind=SUPER,n,switch_layout
@@ -204,9 +208,6 @@
                     '';
                     
                     autostart_sh = ''
-                      # Configurer le scale de l'écran
-                      wlr-randr --output eDP-1 --scale 1.5 &
-                      
                       # Démarrer DankMaterialShell
                       dms run &
                     '';

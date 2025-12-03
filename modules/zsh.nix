@@ -45,6 +45,7 @@
       
       # System management
       shutdown = "systemctl poweroff";
+      rebuild = "cd ~/nixos-config && sudo nixos-rebuild switch --flake .#nixos";
       
       # Docker power management (optional scripts)
       don = "~/.local/bin/don";
