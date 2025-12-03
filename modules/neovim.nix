@@ -38,6 +38,7 @@
       # Image preview for Telescope
       ueberzugpp
       imagemagick
+      chafa
       
       # Version manager for additional tools
       mise
