@@ -98,6 +98,18 @@
     };
   };
   
+  # Turn off micmute LED at boot
+  systemd.services.micmute-led-off = {
+    description = "Turn off micmute LED at boot";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-modules-load.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 0 > /sys/class/leds/platform::micmute/brightness'";
+      RemainAfterExit = true;
+    };
+  };
+  
   # fwupd pour mettre à jour les firmwares
   services.fwupd.enable = true;
 
@@ -123,8 +135,13 @@
     shell = pkgs.zsh;
   };
   
-  # Enable zsh system-wide
-  programs.zsh.enable = true;
+  # Enable zsh system-wide (CRITICAL: ensures shell always available)
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    autosuggestions.enable = true;
+  };
   
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -142,20 +159,30 @@
    chromium
    kitty
    foot
-   # Outils pour Wayland
+   
+   # Wayland utilities
    wl-clipboard
    wl-clip-persist
    cliphist
    wlr-randr
-   # Outils pour la gestion des clés
+   
+   # Security tools
    bitwarden-cli
    jq
    gnupg
    openssh
-   # Debugging clavier
+   
+   # System utilities
    evtest
-   # Audio utilities
    alsa-utils
+   
+   # Essential CLI tools (fallback when flake not applied)
+   zsh
+   eza
+   bat
+   fzf
+   ripgrep
+   fd
   ];
 
   # Enable Flakes

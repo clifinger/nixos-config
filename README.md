@@ -1,210 +1,215 @@
 # NixOS Configuration
 
-Configuration NixOS personnelle de Julien Lenne avec Home Manager.
+A modular, production-ready NixOS configuration featuring MangoWC (Wayland compositor) and DankMaterialShell.
 
-## 🎯 Vue d'ensemble
+## Features
 
-Configuration déclarative complète pour NixOS avec :
-- **Compositeur Wayland** : MangoWC avec DankMaterialShell
-- **Home Manager** : Gestion déclarative des dotfiles utilisateur
-- **Terminal** : Kitty avec thème Electrify Purple
-- **Shell** : Zsh avec Powerlevel10k et Zinit
-- **Outils modernes** : eza, bat, fzf, zoxide, lazygit, lazydocker
+- **Modular Architecture**: Clean separation between system, desktop, and user configurations
+- **Wayland-First**: MangoWC compositor with DankMaterialShell integration
+- **Declarative**: Everything managed through Nix flakes and Home Manager
+- **ThinkPad Optimized**: Custom configurations for ThinkPad hardware
+- **Modern CLI Tools**: eza, bat, fzf, zoxide, lazygit, lazydocker
+- **Developer-Friendly**: Neovim, Git with GPG signing, Docker support
 
-## 📁 Structure
+## Structure
 
 ```
 nixos-config/
-├── configuration.nix           # Configuration système NixOS
-├── hardware-configuration.nix  # Configuration matérielle
-├── flake.nix                   # Flake principal avec Home Manager
-├── flake.lock                  # Lock file des dépendances
-├── home-manager/
-│   ├── home.nix               # Configuration Home Manager principale
-│   └── README.md              # Documentation Home Manager
-├── modules/
-│   ├── kitty.nix              # Module Kitty (terminal)
-│   └── zsh.nix                # Module Zsh (shell)
-└── scripts/
-    └── bitwarden-keys/        # Scripts de gestion des clés SSH/GPG
-        ├── backup-keys.sh
-        ├── restore-keys-auto.sh
-        └── restore-keys.sh
+├── flake.nix              # Main flake configuration
+├── hosts/
+│   └── nixos/             # Host-specific configuration
+│       ├── default.nix
+│       └── hardware-configuration.nix
+├── system/                # System-level modules
+│   ├── boot.nix
+│   ├── networking.nix
+│   ├── audio.nix
+│   ├── bluetooth.nix
+│   ├── security.nix
+│   ├── services.nix
+│   ├── thinkpad.nix
+│   └── virtualization.nix
+├── desktop/               # Desktop environment
+│   └── wayland.nix
+├── home/                  # Home Manager modules
+│   ├── programs/          # User programs
+│   │   ├── kitty.nix
+│   │   ├── zsh.nix
+│   │   ├── neovim.nix
+│   │   └── maple-font.nix
+│   └── wm/                # Window manager
+│       ├── mango.nix
+│       └── dms.nix
+├── users/
+│   └── julien/            # User-specific configuration
+│       └── default.nix
+└── scripts/               # Utility scripts
+    └── bitwarden-keys/
 ```
 
-## 🚀 Installation initiale
+## Installation
 
-### 1. Cloner le repository
+### Initial Setup
 
 ```bash
+# Clone the repository
 git clone https://github.com/clifinger/nixos-config.git ~/nixos-config
 cd ~/nixos-config
-```
 
-### 2. Appliquer la configuration
-
-```bash
-# Copier les fichiers de configuration système
-sudo cp configuration.nix hardware-configuration.nix flake.nix flake.lock /etc/nixos/
-
-# Rebuild avec le flake
-sudo nixos-rebuild switch --flake ~/nixos-config#nixos
-```
-
-### 3. Restaurer les clés SSH/GPG (optionnel)
-
-```bash
-# Se connecter à Bitwarden CLI
-bw login
-
-# Restaurer ou générer les clés
-~/nixos-config/scripts/bitwarden-keys/restore-keys-auto.sh
-```
-
-## 🔄 Mise à jour
-
-```bash
-cd ~/nixos-config
-
-# Mettre à jour le flake.lock
-nix flake update
-
-# Appliquer les changements
+# Apply configuration
 sudo nixos-rebuild switch --flake .#nixos
 ```
 
-## ✨ Fonctionnalités
-
-### Système
-
-- ✅ Kernel Linux latest
-- ✅ Wayland avec MangoWC compositor
-- ✅ PipeWire pour l'audio
-- ✅ NetworkManager pour le réseau
-- ✅ GPG agent avec support SSH intégré
-- ✅ Flakes activés
-- ✅ Sudo sans mot de passe pour wheel
-
-### Terminal (Kitty)
-
-- ✅ Police : Maple Mono Nerd Font 12pt
-- ✅ Opacité et flou (92% opacity, blur 99)
-- ✅ Thème Electrify Purple personnalisé
-- ✅ Raccourcis optimisés pour Wayland
-- ✅ Support du cursor trail
-- ✅ Integration Neovim (padding dynamique)
-
-### Shell (Zsh)
-
-- ✅ Plugin manager : Zinit (auto-installation)
-- ✅ Thème : Powerlevel10k
-- ✅ Plugins :
-  - zsh-syntax-highlighting
-  - zsh-autosuggestions  
-  - zsh-completions
-  - fzf-tab
-  - Oh My Zsh snippets
-- ✅ Outils CLI modernes :
-  - `eza` → `ls` moderne avec icônes
-  - `bat` → `cat` avec coloration syntaxique
-  - `fzf` → fuzzy finder
-  - `zoxide` → `cd` intelligent
-  - `lazygit` → TUI Git
-  - `lazydocker` → TUI Docker
-  - `mise` → version manager
-- ✅ Wrappers intelligents :
-  - `git` sans args → lance lazygit
-  - `docker` sans args → lance lazydocker
-  - `nvim` → ajuste padding Kitty
-
-### Gestion des clés
-
-- ✅ Backup/restore SSH et GPG via Bitwarden CLI
-- ✅ Génération automatique de nouvelles clés
-- ✅ Configuration Git avec signature GPG
-- ✅ Scripts dédiés dans `scripts/bitwarden-keys/`
-
-## 📦 Packages installés
-
-### Système
-- vim, nano, git, wget, curl
-- github-cli, github-copilot-cli
-- chromium, kitty, foot
-- wl-clipboard, wlr-randr
-- bitwarden-cli, jq, gnupg, openssh
-
-### Utilisateur (via Home Manager)
-- eza, bat, fzf, zoxide, tldr
-- fastfetch, mise
-- lazygit, lazydocker
-- neovim
-- Maple Mono Nerd Font
-
-## ⚙️ Configuration personnalisée
-
-### Modifier Kitty
-
-Éditez `modules/kitty.nix` pour personnaliser :
-- Police et taille
-- Couleurs et thème
-- Opacité et effets visuels
-- Raccourcis clavier
-
-### Modifier Zsh
-
-Éditez `modules/zsh.nix` pour :
-- Ajouter/retirer plugins Zinit
-- Modifier alias
-- Ajouter fonctions shell
-- Configurer intégrations CLI
-
-### Ajouter des packages
-
-Éditez `home-manager/home.nix`, section `home.packages`.
-
-## 🎨 Powerlevel10k
-
-Pour reconfigurer le thème du prompt :
+### Restore SSH/GPG Keys (Optional)
 
 ```bash
-p10k configure
+# Login to Bitwarden
+bw login
+
+# Restore keys
+~/nixos-config/scripts/bitwarden-keys/restore-keys-auto.sh
 ```
 
-Le fichier `~/.p10k.zsh` sera créé et chargé automatiquement.
+## System Configuration
 
-## 🔧 Développement
+### Boot & Kernel
+- Systemd-boot bootloader
+- Xanmod kernel for performance
 
-### Vérifier la configuration
+### Audio
+- PipeWire with ALSA and PulseAudio compatibility
+
+### Security
+- Passwordless sudo for wheel group
+- GPG agent with SSH support
+- Polkit enabled
+
+### ThinkPad
+- Fan control enabled
+- All hotkeys functional
+- MicMute LED control
+
+## Window Manager (MangoWC)
+
+### Layouts
+- Scroller (default)
+- Tile
+- Monocle
+
+### Multi-Monitor Support
+- eDP-1: 2560x1600 @ 1.3 scale
+- DP-4: 2560x1440 @ 1.0 scale
+- DP-6: 3840x2160 @ 1.5 scale
+
+### Key Bindings
+
+#### System
+- `Super + R`: Reload config
+- `Super + Shift + R`: Restart DMS
+- `Super + L`: Lock screen
+
+#### Applications
+- `Super + Enter`: Terminal (Kitty)
+- `Super + B`: Browser (Chromium)
+- `Super + E`: File manager (Nautilus)
+- `Alt + Space`: Launcher (DMS)
+
+#### Window Management
+- `Super + Q`: Close window
+- `Super + F`: Toggle floating
+- `Super + M`: Monocle layout
+- `Super + O`: Overview mode
+
+#### Navigation
+- `Super + Arrows`: Focus direction
+- `Super + Shift + Arrows`: Move window
+- `Super + Tab`: Next window
+
+#### Screenshots
+- `Ctrl + Print`: Full screen
+- `Super + Print`: Area selection
+- `Super + Shift + Print`: Area to clipboard
+
+## Development Tools
+
+### Terminal
+- **Kitty**: GPU-accelerated with Maple Mono Nerd Font
+- **Zsh**: Powerlevel10k theme with Zinit plugin manager
+
+### Editors
+- **Neovim**: Full IDE setup from [clifinger/nvim-for-dev](https://github.com/clifinger/nvim-for-dev)
+
+### Version Control
+- **Git**: Configured with GPG signing
+- **Lazygit**: Terminal UI for Git
+
+### Containers
+- **Docker**: Manual start (disabled on boot)
+- **Lazydocker**: Terminal UI for Docker
+
+## Updating
 
 ```bash
 cd ~/nixos-config
+
+# Update flake inputs
+nix flake update
+
+# Rebuild system
+sudo nixos-rebuild switch --flake .#nixos
+```
+
+## Customization
+
+### Add System Packages
+Edit `hosts/nixos/default.nix`:
+```nix
+environment.systemPackages = with pkgs; [
+  # Add your packages here
+];
+```
+
+### Add User Packages
+Edit `users/julien/default.nix`:
+```nix
+home.packages = with pkgs; [
+  # Add your packages here
+];
+```
+
+### Modify MangoWC Settings
+Edit `home/wm/mango.nix`
+
+### Adjust Keybindings
+Edit the `settings` section in `home/wm/mango.nix`
+
+## Troubleshooting
+
+### Check Configuration
+```bash
 nix flake check
 ```
 
-### Tester sans appliquer
-
+### Test Without Applying
 ```bash
 sudo nixos-rebuild build --flake .#nixos
 ```
 
-### Voir les différences
-
+### View Logs
 ```bash
-nix flake diff
+journalctl -xeu mango
+journalctl -xeu home-manager-julien
 ```
 
-## 📝 Notes
+## Repository
 
-- Configuration 100% déclarative - aucun fichier manuel à gérer
-- Zinit et plugins installés automatiquement au premier lancement zsh
-- Fonts gérées par Home Manager
-- Git configuré pour signer automatiquement commits et tags
-- GPG agent démarre automatiquement avec support SSH
+- **GitHub**: https://github.com/clifinger/nixos-config
+- **Author**: Julien Lenne
+- **License**: MIT
 
-## 🔗 Liens
+## References
 
-- Repository : https://github.com/clifinger/nixos-config
-- MangoWC : https://github.com/DreamMaoMao/mangowc
-- DankMaterialShell : https://github.com/AvengeMedia/DankMaterialShell
-- Home Manager : https://github.com/nix-community/home-manager
-
+- [NixOS](https://nixos.org/)
+- [Home Manager](https://github.com/nix-community/home-manager)
+- [MangoWC](https://github.com/DreamMaoMao/mangowc)
+- [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell)
