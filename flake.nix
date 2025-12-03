@@ -208,7 +208,6 @@
                       
                       # États des fenêtres
                       bind=SUPER,f,togglefloating,
-                      bind=SUPER,space,togglefloating,
                       bind=SUPER,m,setlayout,monocle
                       bind=SUPER+SHIFT,m,togglefullscreen,
                       bind=SUPER,o,toggleoverview,
