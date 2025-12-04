@@ -60,6 +60,7 @@
       
       # ===== Window Rules =====
       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
+      windowrule=tags:9,isopensilent:1,istagsilent:1,title:Franz
       
       # ===== Workspace Layout =====
       tagrule=id:1,layout_name:scroller
@@ -95,7 +96,7 @@
       bind=SUPER,f,togglefloating,
       bind=SUPER,m,setlayout,monocle
       bind=SUPER+SHIFT,m,togglefullscreen,
-      bind=SUPER,o,toggleoverview,
+      bind=SUPER,a,toggleoverview,
       
       # Window navigation
       bind=SUPER,Tab,focusstack,next
@@ -200,6 +201,9 @@
       
       # Start DankMaterialShell
       dms run &
+      
+      # Start Franz hidden (for notifications)
+      sleep 2 && franz &
     '';
   };
   

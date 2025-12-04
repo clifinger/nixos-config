@@ -26,6 +26,7 @@ in
     lazygit lazydocker git
     maple-font nerd-fonts.symbols-only
     nautilus grim slurp wl-clipboard libnotify
+    franz
   ];
 
   home.file.".config/nix-shells/haskell.nix".text = ''
@@ -66,6 +67,43 @@ in
     text = ''
       #!/usr/bin/env bash
       nix-shell ~/.config/nix-shells/haskell.nix --run $SHELL
+    '';
+  };
+
+  home.file.".config/nix-shells/gleam.nix".text = ''
+    { pkgs ? import <nixpkgs> {} }:
+
+    pkgs.mkShell {
+      buildInputs = with pkgs; [
+        gleam
+        erlang
+        rebar3
+        nodejs
+      ];
+
+      shellHook = '''
+        if [ -n "$ZSH_VERSION" ]; then
+          export PROMPT="%F{cyan}via%f %F{magenta}✨ gleam%f $PROMPT"
+        elif [ -n "$BASH_VERSION" ]; then
+          export PS1="\[\033[1;36m\]via\[\033[0m\] \[\033[1;35m\]✨ gleam\[\033[0m\] $PS1"
+        fi
+        
+        echo "Gleam development environment"
+        echo "=============================="
+        echo "Gleam:  $(gleam --version | head -1)"
+        echo "Erlang: $(erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell)"
+        echo ""
+        echo "Tools: gleam, erlang, rebar3, node"
+        echo ""
+      ''';
+    }
+  '';
+
+  home.file.".local/bin/gleam-shell" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      nix-shell ~/.config/nix-shells/gleam.nix --run $SHELL
     '';
   };
 
@@ -129,6 +167,8 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentry.package = pkgs.pinentry-curses;
+    pinentry.package = pkgs.pinentry-gnome3;
+    defaultCacheTtl = 345600;
+    maxCacheTtl = 345600;
   };
 }

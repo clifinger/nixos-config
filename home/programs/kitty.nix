@@ -7,7 +7,7 @@
     # Font configuration - Maple Mono Nerd Font
     font = {
       name = "Maple Mono NF";
-      size = 12;
+      size = 13;
     };
     
     settings = {
@@ -90,6 +90,10 @@
     extraConfig = ''
       # Include dynamic theme from DMS
       include dank-theme.conf
+      
+      # Override cursor color for better contrast in nvim normal mode
+      cursor #00E5FF
+      cursor_text_color #000000
       
       # ===== Cursor Trail Effect =====
       cursor_trail 1
