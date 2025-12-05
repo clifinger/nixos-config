@@ -47,7 +47,7 @@
   # Clone your nvim config
   home.activation.cloneNvimConfig = config.lib.dag.entryAfter ["writeBoundary"] ''
     if [ ! -d "${config.home.homeDirectory}/.config/nvim" ]; then
-      ${pkgs.git}/bin/git clone https://github.com/clifinger/nvim-for-dev.git ${config.home.homeDirectory}/.config/nvim
+      ${pkgs.git}/bin/git clone git@github.com:clifinger/nvim-for-dev.git ${config.home.homeDirectory}/.config/nvim
     fi
   '';
 }
