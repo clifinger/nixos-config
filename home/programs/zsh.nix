@@ -50,9 +50,7 @@
       shutdown = "systemctl poweroff";
       rebuild = "cd ~/nixos-config && sudo nixos-rebuild switch --flake .#nixos";
       
-      # Docker power management (optional scripts)
-      don = "~/.local/bin/don";
-      doff = "~/.local/bin/doff";
+      # Docker management
       dstatus = "systemctl status docker --no-pager -l";
     };
     
@@ -137,13 +135,30 @@
       eval "$(zoxide init --cmd cd zsh)"
       eval "$(mise activate zsh)"
       
+      # Nix shell indicator - custom prompt segment
+      # Display shell name with impure/pure status on the right
+      function prompt_nix_shell() {
+        if [[ -n "$IN_NIX_SHELL" ]]; then
+          local shell_name="''${NIX_SHELL_NAME:-nix-shell}"
+          local shell_type="$IN_NIX_SHELL"
+          p10k segment -f 208 -i '❄' -t "$shell_name $shell_type"
+        fi
+      }
+      
       # Load Powerlevel10k configuration
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       
-      # Display fastfetch on new terminal
-      if [[ $(tty) == *"pts"* ]]; then
-        fastfetch --config examples/13 --logo nixos 2>/dev/null || fastfetch 2>/dev/null || true
-      fi
+      # Display fastfetch after instant prompt finishes (but not in nix-shell)
+      function show_fastfetch_once() {
+        if [[ -z "$IN_NIX_SHELL" ]]; then
+          fastfetch --config examples/13 --logo nixos --pipe false 2>/dev/null || fastfetch --pipe false 2>/dev/null || true
+        fi
+        # Remove this function so it only runs once
+        precmd_functions=("''${precmd_functions[@]:#show_fastfetch_once}")
+      }
+      
+      # Add to precmd (runs after instant prompt)
+      precmd_functions+=(show_fastfetch_once)
     '';
   };
   

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Start Docker service
+sudo systemctl start docker.socket docker.service
+echo "Docker started"

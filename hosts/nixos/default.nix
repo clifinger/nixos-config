@@ -51,9 +51,20 @@
     })
     kitty foot
     wl-clipboard wl-clip-persist cliphist wlr-randr
-    bitwarden-cli jq gnupg openssh
+    bitwarden-cli jq gnupg openssh exercism
     evtest alsa-utils
     zsh eza bat fzf ripgrep fd
+    cloudflared
+    (pkgs.writeScriptBin "don" ''
+      #!/usr/bin/env bash
+      sudo systemctl start docker.socket docker.service
+      echo "Docker started"
+    '')
+    (pkgs.writeScriptBin "doff" ''
+      #!/usr/bin/env bash
+      sudo systemctl stop docker.socket docker.service
+      echo "Docker stopped"
+    '')
   ];
 
   system.stateVersion = "25.11";

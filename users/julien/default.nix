@@ -33,6 +33,7 @@ in
     { pkgs ? import <nixpkgs> {} }:
 
     pkgs.mkShell {
+      name = "haskell-shell";
       buildInputs = with pkgs; [
         ghc
         cabal-install
@@ -45,11 +46,7 @@ in
       ];
 
       shellHook = '''
-        if [ -n "$ZSH_VERSION" ]; then
-          export PROMPT="%F{cyan}via%f %F{green}λ haskell%f $PROMPT"
-        elif [ -n "$BASH_VERSION" ]; then
-          export PS1="\[\033[1;36m\]via\[\033[0m\] \[\033[1;32m\]λ haskell\[\033[0m\] $PS1"
-        fi
+        export NIX_SHELL_NAME="haskell-shell"
         
         echo "Haskell development environment"
         echo "=============================="
@@ -74,6 +71,7 @@ in
     { pkgs ? import <nixpkgs> {} }:
 
     pkgs.mkShell {
+      name = "gleam-shell";
       buildInputs = with pkgs; [
         gleam
         erlang
@@ -82,11 +80,7 @@ in
       ];
 
       shellHook = '''
-        if [ -n "$ZSH_VERSION" ]; then
-          export PROMPT="%F{cyan}via%f %F{magenta}✨ gleam%f $PROMPT"
-        elif [ -n "$BASH_VERSION" ]; then
-          export PS1="\[\033[1;36m\]via\[\033[0m\] \[\033[1;35m\]✨ gleam\[\033[0m\] $PS1"
-        fi
+        export NIX_SHELL_NAME="gleam-shell"
         
         echo "Gleam development environment"
         echo "=============================="
@@ -106,6 +100,9 @@ in
       nix-shell ~/.config/nix-shells/gleam.nix --run $SHELL
     '';
   };
+
+  # Powerlevel10k configuration
+  home.file.".p10k.zsh".source = ./../../home/programs/p10k.zsh;
 
   fonts.fontconfig.enable = true;
   dconf.enable = true;
