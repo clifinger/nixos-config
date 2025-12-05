@@ -10,10 +10,18 @@
   # Enable power-profiles-daemon
   services.power-profiles-daemon.enable = true;
 
-  # Allow users in video group to change brightness without sudo
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video $sys$devpath/brightness", RUN+="${pkgs.coreutils}/bin/chmod g+w $sys$devpath/brightness"
-  '';
+  # Allow brightnessctl to run without password for video group
+  security.sudo.extraRules = [
+    {
+      users = [ "root" ];
+      commands = [
+        {
+          command = "${pkgs.brightnessctl}/bin/brightnessctl";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
   # Enable acpid to handle power events
   services.acpid = {
@@ -28,8 +36,8 @@
               # AC plugged in: balanced mode, 80% brightness
               ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set balanced
               
-              # Run as user julien to update DankShell UI
-              ${pkgs.su}/bin/su julien -c "${pkgs.brightnessctl}/bin/brightnessctl set 80%"
+              # Use sudo to trigger DBus events that DankShell listens to
+              ${pkgs.sudo}/bin/sudo ${pkgs.brightnessctl}/bin/brightnessctl set 80%
               
               # Send notification to user
               ${pkgs.su}/bin/su julien -c "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus ${pkgs.libnotify}/bin/notify-send -u low -t 2000 '⚡ AC Connected' 'Profile: Balanced • Brightness: 80%'"
@@ -39,8 +47,8 @@
               # AC unplugged: power-saver mode, 40% brightness
               ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver
               
-              # Run as user julien to update DankShell UI
-              ${pkgs.su}/bin/su julien -c "${pkgs.brightnessctl}/bin/brightnessctl set 40%"
+              # Use sudo to trigger DBus events that DankShell listens to
+              ${pkgs.sudo}/bin/sudo ${pkgs.brightnessctl}/bin/brightnessctl set 40%
               
               # Send notification to user
               ${pkgs.su}/bin/su julien -c "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus ${pkgs.libnotify}/bin/notify-send -u low -t 2000 '🔋 Battery Mode' 'Profile: Power Saver • Brightness: 40%'"
