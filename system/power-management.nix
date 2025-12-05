@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  powerProfileScript = pkgs.writeShellScriptBin "power-profile-switch" ''
+  powerProfileScript = pkgs.writeShellScript "power-profile-switch" ''
     # Get AC adapter status
     AC_STATUS=$(cat /sys/class/power_supply/AC/online)
 
@@ -19,17 +19,16 @@ let
   '';
 in
 {
-  # Copy power profile switch script
+  # Install brightnessctl
   environment.systemPackages = with pkgs; [
     brightnessctl
-    powerProfileScript
   ];
 
   # Udev rule to detect AC adapter changes
   services.udev.extraRules = ''
     # Detect AC adapter changes and switch power profile + brightness
-    SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", RUN+="${powerProfileScript}/bin/power-profile-switch"
-    SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", RUN+="${powerProfileScript}/bin/power-profile-switch"
+    SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", RUN+="${powerProfileScript}"
+    SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", RUN+="${powerProfileScript}"
   '';
 
   # Enable power-profiles-daemon
