@@ -203,8 +203,8 @@
       # Start DankMaterialShell
       dms run &
       
-      # Start Franz hidden (for notifications)
-      sleep 2 && franz &
+      # Start Ferdium minimized (for notifications)
+      sleep 2 && ferdium --hidden &
     '';
   };
   

@@ -26,7 +26,7 @@ in
     lazygit lazydocker git
     maple-font nerd-fonts.symbols-only
     nautilus grim slurp wl-clipboard libnotify
-    franz
+    ferdium
   ];
 
   home.file.".config/nix-shells/haskell.nix".text = ''
