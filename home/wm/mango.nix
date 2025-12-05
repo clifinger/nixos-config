@@ -88,7 +88,7 @@
       bind=SUPER,d,spawn,dms ipc call dash toggle overview
       bind=ALT,space,spawn,dms ipc call spotlight toggle
       bind=SUPER,v,spawn,dms ipc call clipboard toggle
-      bind=SUPER,n,spawn,dms ipc call notifications toggle
+      bind=SUPER+SHIFT,n,spawn,dms ipc call notifications toggle
       bind=SUPER,BackSpace,spawn,dms ipc call powermenu toggle
       bind=SUPER,l,spawn,dms ipc call lock lock
       
