@@ -60,7 +60,6 @@
       
       # ===== Window Rules =====
       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
-      windowrule=tags:9,isopensilent:1,istagsilent:1,title:Franz
       
       # ===== Workspace Layout =====
       tagrule=id:1,layout_name:scroller
