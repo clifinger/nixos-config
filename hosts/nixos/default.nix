@@ -11,6 +11,7 @@
     ../../system/services.nix
     ../../system/thinkpad.nix
     ../../system/virtualization.nix
+    ../../system/power-management.nix
     ../../desktop/wayland.nix
   ];
 

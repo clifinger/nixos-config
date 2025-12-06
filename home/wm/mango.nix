@@ -60,6 +60,7 @@
       
       # ===== Window Rules =====
       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
+      windowrule=allow_csd:0,appid:ferdium
       
       # ===== Workspace Layout =====
       tagrule=id:1,layout_name:scroller
@@ -186,11 +187,11 @@
     '';
     
     autostart_sh = ''
-      # Wait for PipeWire to be ready
-      for i in {1..30}; do
-        wpctl status &>/dev/null && break
-        sleep 0.2
-      done
+      # # Wait for PipeWire to be ready
+      # for i in {1..30}; do
+      #   wpctl status &>/dev/null && break
+      #   sleep 0.2
+      # done
       
       # XDG Desktop Portal
       dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots &
@@ -203,7 +204,7 @@
       dms run &
       
       # Start Ferdium minimized (for notifications)
-      sleep 2 && ferdium --hidden &
+      sleep 2 && ferdium --hidden --disable-frame &
     '';
   };
   
