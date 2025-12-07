@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
     ../../system/boot.nix
     ../../system/networking.nix
     ../../system/audio.nix
