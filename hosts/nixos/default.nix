@@ -38,7 +38,7 @@
   users.users.julien = {
     isNormalUser = true;
     description = "Julien Lenne";
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "seat" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "input" "seat" "docker" "vmware" ];
     shell = pkgs.zsh;
   };
 
