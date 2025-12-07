@@ -6,7 +6,7 @@
   security.sudo = {
     wheelNeedsPassword = false;
     extraRules = [{
-      users = [ "julien" ];
+      groups = [ "wheel" ];
       commands = [{
         command = "/run/current-system/sw/bin/tee /sys/class/leds/platform\\:\\:micmute/brightness";
         options = [ "NOPASSWD" ];

@@ -128,12 +128,12 @@
       
       # Layouts
       bind=SUPER,s,setlayout,scroller
-      bind=SUPER,n,spawn,/home/julien/.config/mango/toggle-layout.sh
+      bind=SUPER,n,spawn,${config.home.homeDirectory}/.config/mango/toggle-layout.sh
       bind=SUPER,0,switch_proportion_preset
       
       # Screenshots
-      bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim /home/julien/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
-      bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" /home/julien/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
+      bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
+      bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
       bind=SUPER+SHIFT,Print,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
       
       # Media keys
@@ -195,6 +195,9 @@
       
       # XDG Desktop Portal
       dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots &
+      
+      # Start DankMaterialShell
+      dms run &
       
       # Clipboard utilities
       wl-clip-persist --clipboard regular --reconnect-tries 0 &
