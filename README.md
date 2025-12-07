@@ -56,6 +56,9 @@ nixos-config/
 git clone https://github.com/clifinger/nixos-config.git ~/nixos-config
 cd ~/nixos-config
 
+# Generate hardware configuration for your machine
+sudo nixos-generate-config --show-hardware-config > ~/nixos-config/hosts/nixos/hardware-configuration.nix
+
 # Apply configuration
 sudo nixos-rebuild switch --flake .#nixos
 ```
