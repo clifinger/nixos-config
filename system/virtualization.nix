@@ -6,8 +6,8 @@
     enableOnBoot = false;
   };
 
-  virtualisation.vmware.host = {
-    enable = true;
-    package = pkgs.vmware-workstation;
-  };
+  # virtualisation.vmware.host = {
+  #   enable = true;
+  #   package = pkgs.vmware-workstation;
+  # };
 }

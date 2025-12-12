@@ -17,6 +17,7 @@
 
   # Use Xanmod kernel.
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -82,7 +83,7 @@
   services.blueman.enable = true;
   
   # ThinkPad specific settings
-  boot.kernelModules = [ "thinkpad_acpi" ];
+  boot.kernelModules = [ "thinkpad_acpi" "usbhid" ];
   boot.extraModprobeConfig = ''
     options thinkpad_acpi fan_control=1 hotkey=1
   '';
