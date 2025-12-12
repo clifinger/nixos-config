@@ -19,14 +19,14 @@
           {
             criteria = "Hewlett Packard HP Z27n CNK72307H3";
             scale = 1.0;
-            mode = "2560x1440@59.951Hz";
+            mode = "2560x1440@59.951000Hz";
             position = "0,0";
             status = "enable";
           }
           {
             criteria = "Xiaomi Corporation Mi Monitor 6638000002298";
             scale = 1.5;
-            mode = "3840x2160@60Hz";
+            mode = "3840x2160@60.000000Hz";
             position = "2560,0";
             status = "enable";
           }
@@ -44,7 +44,7 @@
           {
             criteria = "Hewlett Packard HP Z27n CNK72307H3";
             scale = 1.0;
-            mode = "2560x1440@59.951Hz";
+            mode = "2560x1440@59.951000Hz";
             position = "0,0";
             status = "enable";
           }
@@ -62,7 +62,7 @@
           {
             criteria = "Xiaomi Corporation Mi Monitor 6638000002298";
             scale = 1.5;
-            mode = "3840x2160@60Hz";
+            mode = "3840x2160@60.000000Hz";
             position = "0,0";
             status = "enable";
           }
@@ -76,7 +76,7 @@
           {
             criteria = "Lenovo Group Limited 0x41B0 Unknown";
             scale = 1.3;
-            mode = "2560x1600@60Hz";
+            mode = "2560x1600@60.000999Hz";
             position = "0,0";
             status = "enable";
           }
