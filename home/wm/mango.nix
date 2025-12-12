@@ -37,6 +37,12 @@
       repeat_delay=600
       xkb_rules_layout=us
       
+      # ===== Input Devices =====
+      # Accept all input devices by default
+      devicerule=enable:1,type:keyboard
+      devicerule=enable:1,type:pointer
+      devicerule=enable:1,type:touch
+      
       # ===== Scroller Layout =====
       scroller_default_proportion=0.8
       scroller_focus_center=0
@@ -52,14 +58,14 @@
       sloppyfocus=1
       
       # ===== Monitor Configuration =====
-      # eDP-1 (built-in): 2560x1600 @ 1.3 scale, position: 0,0
+      # Format: name,mfact,nmaster,layout,transform,scale,x,y,width,height,refreshrate
+      # Multiple rules for different DP ports (they change on hotplug)
       monitorrule=eDP-1,0.55,1,scroller,0,1.3,0,0,2560,1600,60
-      
-      # DP-4 (HP Z27n): 2560x1440 @ 1.0 scale, position: 1969,0
       monitorrule=DP-4,0.55,1,scroller,0,1.0,1969,0,2560,1440,60
-      
-      # DP-6 (Xiaomi 4K): 3840x2160 @ 1.5 scale, position: 4529,0
+      monitorrule=DP-5,0.55,1,scroller,0,1.0,1969,0,2560,1440,60
       monitorrule=DP-6,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
+      monitorrule=DP-7,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
+      monitorrule=DP-8,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
       
       # ===== Window Rules =====
       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
@@ -196,13 +202,13 @@
       bind=ALT,z,toggle_named_scratchpad,scratchpad-term,none,kitty --class scratchpad-term
       
       # Focus monitor left
-      bind=SUPER,code:112,focusmon,left
+      bind=SUPER,code:112,focusmon,right
       # Focus monitor right
-      bind=SUPER,code:117,focusmon,right
+      bind=SUPER,code:117,focusmon,left
       # Move window to left monitor
-      bind=SUPER+SHIFT,code:112,tagmon,left,0
+      bind=SUPER+SHIFT,code:112,tagmon,right,0
       # Move window to right monitor
-      bind=SUPER+SHIFT,code:117,tagmon,right,0
+      bind=SUPER+SHIFT,code:117,tagmon,left,0
       
       # Swipe left with 3 fingers
       gesturebind=none,left,3,focusstack,prev
