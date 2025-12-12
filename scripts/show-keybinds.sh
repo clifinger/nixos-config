@@ -136,7 +136,7 @@ parse_bindings() {
 
 # Display using rofi or fzf
 if command -v rofi &> /dev/null; then
-    parse_bindings | rofi -dmenu -i -p "Keybindings" -theme-str 'window {width: 70%; height: 80%;}'
+    parse_bindings | rofi -dmenu -i -p "Keybindings" -theme ~/.config/rofi/dms-theme.rasi
 elif command -v fzf &> /dev/null; then
     parse_bindings | fzf --header="Use / to search, ESC to quit" --height=100% --no-sort
 else
