@@ -41,7 +41,10 @@
       scroller_default_proportion=0.8
       scroller_focus_center=0
       scroller_prefer_center=0
-      scroller_proportion_preset=0.5,0.8,1.0
+      scroller_proportion_preset=0.5,0.6,0.7,0.8,0.9,1.0
+      
+      # ===== Layout Cycling =====
+      circle_layout=scroller,tile,vertical_tile,monocle
       
       # ===== Multi-Monitor =====
       focus_cross_monitor=1
@@ -101,10 +104,10 @@
       
       # Window navigation
       bind=SUPER,Tab,focusstack,next
-      bind=SUPER,Left,focusdir,left
-      bind=SUPER,Right,focusdir,right
-      bind=SUPER,Up,focusdir,up
-      bind=SUPER,Down,focusdir,down
+      bind=SUPER,Left,focusstack,prev
+      bind=SUPER,Right,focusstack,next
+      bind=SUPER,Up,focusstack,prev
+      bind=SUPER,Down,focusstack,next
       
       # Move windows
       bind=SUPER+SHIFT,Left,exchange_client,left
@@ -120,6 +123,13 @@
       bind=SUPER,equal,resizewin,80,80
       bind=SUPER,minus,resizewin,-80,-80
       
+      # Resize tiled windows
+      # For tile/vertical_tile: adjust master/stack ratio with arrows
+      bind=ALT,Left,setmfact,-0.05
+      bind=ALT,Right,setmfact,+0.05
+      # For scroller: cycle through width presets (50%, 60%, 70%, 80%, 90%, 100%)
+      bind=ALT,p,switch_proportion_preset
+      
       # Move floating windows
       bind=ALT+SUPER,Left,smartmovewin,left
       bind=ALT+SUPER,Right,smartmovewin,right
@@ -128,8 +138,9 @@
       
       # Layouts
       bind=SUPER,s,setlayout,scroller
-      bind=SUPER,n,spawn,${config.home.homeDirectory}/.config/mango/toggle-layout.sh
-      bind=SUPER,0,switch_proportion_preset
+      bind=SUPER,t,setlayout,tile
+      bind=SUPER,y,setlayout,vertical_tile
+      bind=SUPER,n,switch_layout
       
       # Screenshots
       bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
