@@ -79,40 +79,63 @@
       # ===== KEYBINDINGS =====
       
       # System
+      # Reload config and restart
       bind=SUPER,r,spawn_shell,mmsg -d reload_config && sleep 0.2 && mmsg -d setlayout,scroller
+      # Restart DankMaterialShell
       bind=SUPER+SHIFT,r,spawn,dms restart
       
-      # Applications
+      # Open terminal
       bind=SUPER,Return,spawn,kitty
+      # Open browser
       bind=SUPER,b,spawn,chromium
+      # Open file manager
       bind=SUPER,e,spawn,nautilus
       
-      # DankMaterialShell widgets
+      # Toggle dashboard overview
       bind=SUPER,d,spawn,dms ipc call dash toggle overview
+      # Application launcher
       bind=ALT,space,spawn,dms ipc call spotlight toggle
+      # Clipboard manager
       bind=SUPER,v,spawn,dms ipc call clipboard toggle
+      # Notification center
       bind=SUPER,i,spawn,dms ipc call notifications toggle
+      # Power menu
       bind=SUPER,BackSpace,spawn,dms ipc call powermenu toggle
+      # Lock screen
       bind=SUPER,l,spawn,dms ipc call lock lock
       
-      # Window management
+      # Show all keybindings
+      bind=SUPER,slash,spawn,kitty --class floating -e show-keybinds
+      
+      # Close focused window
       bind=SUPER,q,killclient,
+      # Toggle floating mode
       bind=SUPER,f,togglefloating,
+      # Monocle layout (single window fullscreen)
       bind=SUPER,m,setlayout,monocle
+      # Toggle fullscreen
       bind=SUPER+SHIFT,m,togglefullscreen,
+      # Toggle overview mode
       bind=SUPER,a,toggleoverview,
       
-      # Window navigation
+      # Cycle through windows
       bind=SUPER,Tab,focusstack,next
+      # Focus window to the left
       bind=SUPER,Left,focusstack,prev
+      # Focus window to the right
       bind=SUPER,Right,focusstack,next
+      # Focus window above
       bind=SUPER,Up,focusstack,prev
+      # Focus window below
       bind=SUPER,Down,focusstack,next
       
-      # Move windows
+      # Swap window left
       bind=SUPER+SHIFT,Left,exchange_client,left
+      # Swap window right
       bind=SUPER+SHIFT,Right,exchange_client,right
+      # Swap window up
       bind=SUPER+SHIFT,Up,exchange_client,up
+      # Swap window down
       bind=SUPER+SHIFT,Down,exchange_client,down
       
       # Resize floating windows
@@ -217,6 +240,12 @@
       # Start Ferdium minimized (for notifications)
       sleep 2 && ferdium --hidden --disable-frame &
     '';
+  };
+  
+  # Show keybindings script
+  home.file.".local/bin/show-keybinds" = {
+    source = ../../scripts/show-keybinds.sh;
+    executable = true;
   };
   
   # Toggle layout script
