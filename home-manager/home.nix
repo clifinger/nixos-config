@@ -29,7 +29,7 @@ in
     lazygit       # Terminal UI for git
     lazydocker    # Terminal UI for docker
     git           # Git version control
-    rofi-wayland  # Application launcher and dmenu replacement
+    rofi          # Application launcher and dmenu replacement
     
     # Fonts - Maple Mono Nerd Font (custom package)
     maple-font
