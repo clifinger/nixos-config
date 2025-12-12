@@ -58,14 +58,10 @@
       sloppyfocus=1
       
       # ===== Monitor Configuration =====
-      # Format: name,mfact,nmaster,layout,transform,scale,x,y,width,height,refreshrate
-      # Multiple rules for different DP ports (they change on hotplug)
-      monitorrule=eDP-1,0.55,1,scroller,0,1.3,0,0,2560,1600,60
-      monitorrule=DP-4,0.55,1,scroller,0,1.0,1969,0,2560,1440,60
-      monitorrule=DP-5,0.55,1,scroller,0,1.0,1969,0,2560,1440,60
-      monitorrule=DP-6,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
-      monitorrule=DP-7,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
-      monitorrule=DP-8,0.55,1,scroller,0,1.5,4529,0,3840,2160,60
+      # Monitor configuration is now handled by Kanshi (see kanshi.nix)
+      # Default settings for all monitors
+      mfact=0.55
+      nmaster=1
       
       # ===== Window Rules =====
       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
@@ -82,6 +78,9 @@
       tagrule=id:7,layout_name:scroller
       tagrule=id:8,layout_name:scroller
       tagrule=id:9,layout_name:scroller
+
+      # ===== Overview Mode =====
+      ov_tab_mode=1
       
       # ===== KEYBINDINGS =====
       

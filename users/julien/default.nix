@@ -11,6 +11,7 @@ in
     ../../home/programs/neovim.nix
     ../../home/wm/mango.nix
     ../../home/wm/dms.nix
+    ../../home/wm/kanshi.nix
   ];
 
   home = {
@@ -28,6 +29,7 @@ in
     nautilus grim slurp wl-clipboard libnotify
     rofi  # Application launcher and dmenu
     ferdium
+    kanshi wlr-randr
   ];
 
   home.file.".config/nix-shells/haskell.nix".text = ''
