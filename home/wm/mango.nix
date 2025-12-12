@@ -64,6 +64,7 @@
       # ===== Window Rules =====
       windowrule=isnamedscratchpad:1,scratchpad_width:1500,scratchpad_height:900,appid:scratchpad-term
       windowrule=allow_csd:0,appid:ferdium
+      windowrule=isfloating:1,title:^rofi
       
       # ===== Workspace Layout =====
       tagrule=id:1,layout_name:scroller
