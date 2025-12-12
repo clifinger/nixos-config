@@ -26,6 +26,7 @@ in
     lazygit lazydocker git
     maple-font nerd-fonts.symbols-only
     nautilus grim slurp wl-clipboard libnotify
+    rofi  # Application launcher and dmenu
     ferdium
   ];
 
