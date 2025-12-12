@@ -106,7 +106,7 @@
       bind=SUPER,l,spawn,dms ipc call lock lock
       
       # Show all keybindings
-      bind=SUPER,slash,spawn,kitty --class floating -e show-keybinds
+      bind=SUPER,slash,spawn,show-keybinds
       
       # Close focused window
       bind=SUPER,q,killclient,
