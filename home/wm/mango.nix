@@ -138,39 +138,52 @@
       # Swap window down
       bind=SUPER+SHIFT,Down,exchange_client,down
       
-      # Resize floating windows
+      # Resize floating left
       bind=CTRL+SUPER,Left,smartresizewin,left
+      # Resize floating right
       bind=CTRL+SUPER,Right,smartresizewin,right
+      # Resize floating up
       bind=CTRL+SUPER,Up,smartresizewin,up
+      # Resize floating down
       bind=CTRL+SUPER,Down,smartresizewin,down
+      # Increase window size
       bind=SUPER,equal,resizewin,80,80
+      # Decrease window size
       bind=SUPER,minus,resizewin,-80,-80
       
-      # Resize tiled windows
-      # For tile/vertical_tile: adjust master/stack ratio with arrows
+      # Decrease master area
       bind=ALT,Left,setmfact,-0.05
+      # Increase master area
       bind=ALT,Right,setmfact,+0.05
-      # For scroller: cycle through width presets (50%, 60%, 70%, 80%, 90%, 100%)
+      # Cycle through width presets
       bind=ALT,p,switch_proportion_preset
       
-      # Move floating windows
+      # Move floating window left
       bind=ALT+SUPER,Left,smartmovewin,left
+      # Move floating window right
       bind=ALT+SUPER,Right,smartmovewin,right
+      # Move floating window up
       bind=ALT+SUPER,Up,smartmovewin,up
+      # Move floating window down
       bind=ALT+SUPER,Down,smartmovewin,down
       
-      # Layouts
+      # Scroller layout
       bind=SUPER,s,setlayout,scroller
+      # Tile layout
       bind=SUPER,t,setlayout,tile
+      # Vertical tile layout
       bind=SUPER,y,setlayout,vertical_tile
+      # Cycle layouts
       bind=SUPER,n,switch_layout
       
-      # Screenshots
+      # Screenshot full screen
       bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
+      # Screenshot area to file
       bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
+      # Screenshot area to clipboard
       bind=SUPER+SHIFT,Print,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
       
-      # Media keys
+      # Media keys (no comments - will be hidden from viewer)
       bind=none,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
       bind=none,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
       bind=none,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
@@ -178,45 +191,68 @@
       bind=none,XF86MonBrightnessUp,spawn,brightnessctl set 5%+
       bind=none,XF86MonBrightnessDown,spawn,brightnessctl set 5%-
       
-      # Scratchpad
+      # Toggle terminal scratchpad
       bind=ALT,z,toggle_named_scratchpad,scratchpad-term,none,kitty --class scratchpad-term
       
-      # Monitor navigation (PgUp/PgDn)
+      # Focus monitor left
       bind=SUPER,code:112,focusmon,left
+      # Focus monitor right
       bind=SUPER,code:117,focusmon,right
+      # Move window to left monitor
       bind=SUPER+SHIFT,code:112,tagmon,left,0
+      # Move window to right monitor
       bind=SUPER+SHIFT,code:117,tagmon,right,0
       
-      # Touchpad gestures
+      # Swipe left with 3 fingers
       gesturebind=none,left,3,focusstack,prev
+      # Swipe right with 3 fingers
       gesturebind=none,right,3,focusstack,next
       
-      # Workspaces
+      # View all workspaces
       bind=SUPER,0,view,0,0
+      # View workspace 1
       bind=SUPER,1,view,1,0
+      # View workspace 2
       bind=SUPER,2,view,2,0
+      # View workspace 3
       bind=SUPER,3,view,3,0
+      # View workspace 4
       bind=SUPER,4,view,4,0
+      # View workspace 5
       bind=SUPER,5,view,5,0
+      # View workspace 6
       bind=SUPER,6,view,6,0
+      # View workspace 7
       bind=SUPER,7,view,7,0
+      # View workspace 8
       bind=SUPER,8,view,8,0
+      # View workspace 9
       bind=SUPER,9,view,9,0
       
-      # Move to workspace
+      # Move to all workspaces
       bind=SUPER+SHIFT,0,tag,0,0
+      # Move to workspace 1
       bind=SUPER+SHIFT,1,tag,1,0
+      # Move to workspace 2
       bind=SUPER+SHIFT,2,tag,2,0
+      # Move to workspace 3
       bind=SUPER+SHIFT,3,tag,3,0
+      # Move to workspace 4
       bind=SUPER+SHIFT,4,tag,4,0
+      # Move to workspace 5
       bind=SUPER+SHIFT,5,tag,5,0
+      # Move to workspace 6
       bind=SUPER+SHIFT,6,tag,6,0
+      # Move to workspace 7
       bind=SUPER+SHIFT,7,tag,7,0
+      # Move to workspace 8
       bind=SUPER+SHIFT,8,tag,8,0
+      # Move to workspace 9
       bind=SUPER+SHIFT,9,tag,9,0
       
-      # Mouse bindings
+      # Drag to move window
       mousebind=SUPER,btn_left,moveresize,curmove
+      # Drag to resize window
       mousebind=SUPER,btn_right,moveresize,curresize
     '';
     
