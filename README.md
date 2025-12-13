@@ -1,175 +1,150 @@
 # NixOS Configuration
 
-My personal NixOS configuration with MangoWC compositor and home-manager.
+Personal NixOS config with MangoWC compositor, Starship prompt, and home-manager.
 
-## 📋 Features
+## Features
 
 - **Compositor:** MangoWC (Wayland)
-- **Shell:** Zsh with Starship prompt
+- **Shell:** Zsh + Starship (Rust, fast)
 - **Terminal:** Kitty
 - **Editor:** Neovim
 - **Hardware:** ThinkPad E16 Gen 1 (AMD)
 
-## 🚀 Quick Start
+## Install This Config
 
-### Fresh Install
+**Prerequisites:** NixOS already installed with flakes enabled.
 
-1. **Boot NixOS installer** and get network access:
-   ```bash
-   sudo systemctl start wpa_supplicant
-   wpa_cli
-   > add_network
-   > set_network 0 ssid "YOUR_WIFI"
-   > set_network 0 psk "YOUR_PASSWORD"
-   > enable_network 0
-   > quit
-   ```
-
-2. **Partition and format** (adjust as needed):
-   ```bash
-   # Example for UEFI systems
-   parted /dev/nvme0n1 -- mklabel gpt
-   parted /dev/nvme0n1 -- mkpart ESP fat32 1MiB 512MiB
-   parted /dev/nvme0n1 -- set 1 esp on
-   parted /dev/nvme0n1 -- mkpart primary 512MiB 100%
-   
-   mkfs.fat -F 32 -n boot /dev/nvme0n1p1
-   mkfs.ext4 -L nixos /dev/nvme0n1p2
-   
-   mount /dev/disk/by-label/nixos /mnt
-   mkdir -p /mnt/boot
-   mount /dev/disk/by-label/boot /mnt/boot
-   ```
-
-3. **Clone this repo and install**:
-   ```bash
-   cd /mnt
-   nix-shell -p git
-   git clone https://github.com/YOUR_USERNAME/nixos-config etc/nixos
-   cd /etc/nixos
-   
-   # Generate hardware config
-   nixos-generate-config --show-hardware-config > hardware-configuration.nix
-   
-   # Install
-   nixos-install --flake .#nixos
-   
-   # Set password
-   nixos-enter
-   passwd julien
-   exit
-   
-   reboot
-   ```
-
-### Rebuild System
-
-After making changes:
 ```bash
+# Backup your current config
+sudo mv /etc/nixos /etc/nixos.backup
+
+# Clone this repo
+sudo git clone https://github.com/clifinger/nixos-config.git /etc/nixos
+cd /etc/nixos
+
+# Generate your hardware config
+sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
+
+# Review and adjust users/julien/default.nix if needed
+
+# Apply the configuration
 sudo nixos-rebuild switch --flake .#nixos
+
+# Set your password
+passwd
+
+# Reboot
+reboot
 ```
 
-Or use the alias:
+## Daily Usage
+
+### Rebuild After Changes
+
 ```bash
+rebuild  # alias for: sudo nixos-rebuild switch --flake .#nixos
+```
+
+### Update Dependencies
+
+```bash
+cd /etc/nixos
+nix flake update
 rebuild
 ```
 
-### Update All Inputs
-
-```bash
-nix flake update
-sudo nixos-rebuild switch --flake .#nixos
-```
-
-## 📁 Structure
-
-```
-.
-├── flake.nix                  # Flake entry point
-├── flake.lock                 # Locked dependencies
-├── hardware-configuration.nix # Auto-generated hardware config
-│
-├── hosts/nixos/              # System configuration
-│   └── default.nix          # Main system config
-│
-├── system/                   # System modules
-│   ├── boot.nix
-│   ├── networking.nix
-│   ├── audio.nix
-│   └── ...
-│
-├── users/julien/             # User-specific home-manager config
-│   └── default.nix
-│
-├── home/                     # Reusable home-manager modules
-│   ├── programs/            # Program configs (zsh, kitty, nvim, starship)
-│   ├── wm/                  # Window manager configs (mango, dms)
-│   └── services/
-│
-├── desktop/                  # Desktop environment settings
-└── scripts/                  # Helper scripts
-```
-
-### Why This Structure?
-
-- **hosts/nixos/** - Easy to add more machines later (laptop, desktop, server)
-- **system/** - System configs split by topic for clarity
-- **home/** - Reusable modules you can share across users/machines
-- **users/julien/** - Personal config that imports from home/
-
-## 🔧 Common Tasks
-
 ### Add a Package
 
-System-wide:
+**System-wide** (available to all users):
 ```nix
-# hosts/nixos/default.nix
+# Edit hosts/nixos/default.nix
 environment.systemPackages = with pkgs; [
   your-package
 ];
 ```
 
-User-specific:
+**User-only** (just for your user):
 ```nix
-# users/julien/default.nix
+# Edit users/julien/default.nix
 home.packages = with pkgs; [
   your-package
 ];
 ```
 
-### Modify Zsh Config
+Then `rebuild`.
 
-Edit `home/programs/zsh.nix` then rebuild.
+## Structure
 
-### Change Starship Prompt
-
-Edit `home/programs/starship.nix` then rebuild.
-
-## 📝 Notes
-
-- **No sudo password:** Wheel group doesn't need password
-- **Auto-login:** Getty auto-logs in as julien
-- **Flakes enabled:** Using experimental nix-command and flakes features
-- **Docker:** Disabled by default, use `don`/`doff` to start/stop
-
-## 🆘 Troubleshooting
-
-### Rebuild fails
-```bash
-nix flake check  # Check for errors
+```
+.
+├── flake.nix                  # Entry point
+├── flake.lock                 # Locked dependency versions
+├── hardware-configuration.nix # Auto-generated (your hardware)
+│
+├── hosts/nixos/              # System config for this machine
+│   └── default.nix          # Imports from system/
+│
+├── system/                   # System modules (split by topic)
+│   ├── boot.nix
+│   ├── networking.nix
+│   ├── audio.nix
+│   └── ...
+│
+├── users/julien/             # Your home-manager config
+│   └── default.nix          # Imports from home/
+│
+├── home/                     # Reusable home-manager modules
+│   ├── programs/            # zsh, kitty, nvim, starship
+│   ├── wm/                  # mango, dms
+│   └── services/
+│
+├── desktop/                  # Desktop environment settings
+└── scripts/                  # Helper scripts (don, doff, etc)
 ```
 
-### Rollback to previous generation
+**Why `hosts/nixos/`?** Allows adding more machines later (desktop, server) while sharing modules from `system/` and `home/`.
+
+## Customize
+
+### Zsh Config
+Edit `home/programs/zsh.nix` then `rebuild`.
+
+### Starship Prompt
+Edit `home/programs/starship.nix` then `rebuild`.
+
+### System Settings
+Edit files in `system/` then `rebuild`.
+
+## Troubleshooting
+
+**Check for errors:**
+```bash
+nix flake check
+```
+
+**Rollback to previous version:**
 ```bash
 sudo nixos-rebuild switch --rollback
 ```
 
-### List generations
+**List all generations:**
 ```bash
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 ```
 
+**Clean old generations:**
+```bash
+sudo nix-collect-garbage --delete-older-than 7d
+```
+
+## Notes
+
+- Auto-login enabled (getty)
+- Sudo without password for wheel group
+- Docker disabled by default (use `don`/`doff` commands)
+- Xanmod kernel for better performance
+
 ---
 
-**System Version:** NixOS 26.05 (Unstable)  
+**NixOS:** 26.05 Unstable  
 **State Version:** 25.11
