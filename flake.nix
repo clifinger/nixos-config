@@ -35,8 +35,6 @@
           modules = [
             # Host configuration
             ./hosts/nixos
-            
-            # Enable MangoWC at system level
             mangowc.nixosModules.mango
             {
               programs.mango.enable = true;
