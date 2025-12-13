@@ -55,15 +55,15 @@ rebuild
 
 ### Add a Package
 
-**System-wide** (available to all users):
+**System-wide:**
 ```nix
-# Edit hosts/nixos/default.nix
+# Edit configuration.nix
 environment.systemPackages = with pkgs; [
   your-package
 ];
 ```
 
-**User-only** (just for your user):
+**User-only:**
 ```nix
 # Edit users/julien/default.nix
 home.packages = with pkgs; [
@@ -78,31 +78,27 @@ Then `rebuild`.
 ```
 .
 ├── flake.nix                  # Entry point
-├── flake.lock                 # Locked dependency versions
-├── hardware-configuration.nix # Auto-generated (your hardware)
+├── configuration.nix          # Main system config
+├── hardware-configuration.nix # Auto-generated hardware
 │
-├── hosts/nixos/              # System config for this machine
-│   └── default.nix          # Imports from system/
-│
-├── system/                   # System modules
+├── system/                    # System modules
 │   ├── boot.nix
-│   ├── networking.nix
 │   ├── audio.nix
-│   ├── wayland.nix          # Desktop environment
+│   ├── wayland.nix
 │   └── ...
 │
-├── users/julien/             # Your home-manager config
-│   └── default.nix          # Imports from home-manager/
+├── users/julien/              # Your home-manager config
+│   └── default.nix
 │
-├── home-manager/             # Home-manager modules
-│   ├── programs/            # zsh, kitty, nvim, starship
-│   └── wm/                  # mango, dms, kanshi, show-keybinds
+├── home-manager/              # Home-manager modules
+│   ├── programs/             # zsh, kitty, nvim, starship
+│   └── wm/                   # mango, dms, kanshi
 │
-└── utils/                    # Manual utility scripts
-    └── bitwarden-keys/      # Backup/restore scripts (run manually)
+└── utils/                     # Manual scripts
+    └── bitwarden-keys/
 ```
 
-**Why `hosts/nixos/`?** Allows adding more machines later (desktop, server) while sharing modules from `system/` and `home-manager/`.
+**Simple and flat.** All system config in `configuration.nix`, modules split by topic in `system/`.
 
 ## Customize
 
@@ -113,7 +109,7 @@ Edit `home-manager/programs/zsh.nix` then `rebuild`.
 Edit `home-manager/programs/starship.nix` then `rebuild`.
 
 ### System Settings
-Edit files in `system/` then `rebuild`.
+Edit `configuration.nix` or files in `system/` then `rebuild`.
 
 ## Troubleshooting
 
@@ -122,12 +118,12 @@ Edit files in `system/` then `rebuild`.
 nix flake check
 ```
 
-**Rollback to previous version:**
+**Rollback:**
 ```bash
 sudo nixos-rebuild switch --rollback
 ```
 
-**List all generations:**
+**List generations:**
 ```bash
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 ```
@@ -141,7 +137,7 @@ sudo nix-collect-garbage --delete-older-than 7d
 
 - Auto-login enabled (getty)
 - Sudo without password for wheel group
-- Docker disabled by default (use `don`/`doff` commands from hosts/nixos/default.nix)
+- Docker disabled by default (use `don`/`doff` commands)
 - Xanmod kernel for better performance
 
 ---

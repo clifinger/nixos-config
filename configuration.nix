@@ -2,17 +2,17 @@
 
 {
   imports = [
-    ../../hardware-configuration.nix
-    ../../system/boot.nix
-    ../../system/networking.nix
-    ../../system/audio.nix
-    ../../system/bluetooth.nix
-    ../../system/security.nix
-    ../../system/services.nix
-    ../../system/thinkpad.nix
-    ../../system/virtualization.nix
-    ../../system/power-management.nix
-    ../../system/wayland.nix
+    ./hardware-configuration.nix
+    ./system/boot.nix
+    ./system/networking.nix
+    ./system/audio.nix
+    ./system/bluetooth.nix
+    ./system/security.nix
+    ./system/services.nix
+    ./system/thinkpad.nix
+    ./system/virtualization.nix
+    ./system/power-management.nix
+    ./system/wayland.nix
   ];
 
   networking.hostName = "nixos";

@@ -33,8 +33,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [
-            # Host configuration
-            ./hosts/nixos
+            ./configuration.nix
             mangowc.nixosModules.mango
             {
               programs.mango.enable = true;
