@@ -86,24 +86,20 @@ Then `rebuild`.
 │   ├── audio.nix
 │   └── ...
 │
-├── home-manager/              # All home-manager stuff
+├── home-manager/              # Home-manager config
 │   ├── julien/               # User config
-│   ├── programs/             # Shared modules (zsh, kitty, nvim)
-│   └── wm/                   # Window manager configs
+│   └── programs/             # All programs (zsh, kitty, mango, etc)
 │
 └── utils/                     # Manual scripts
     └── bitwarden-keys/
 ```
 
-**Everything home-manager related is in `home-manager/`.**
+**Simple and flat.** System in `system/`, user in `home-manager/`.
 
 ## Customize
 
-### Zsh Config
-Edit `home-manager/programs/zsh.nix` then `rebuild`.
-
-### Starship Prompt
-Edit `home-manager/programs/starship.nix` then `rebuild`.
+### Programs
+Edit files in `home-manager/programs/` then `rebuild`.
 
 ### User Packages
 Edit `home-manager/julien/default.nix` then `rebuild`.

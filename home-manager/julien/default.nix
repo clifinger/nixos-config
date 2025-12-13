@@ -10,9 +10,9 @@ in
     ../../home-manager/programs/zsh.nix
     ../../home-manager/programs/starship.nix
     ../../home-manager/programs/neovim.nix
-    ../../home-manager/wm/mango.nix
-    ../../home-manager/wm/dms.nix
-    ../../home-manager/wm/kanshi.nix
+    ../../home-manager/programs/mango.nix
+    ../../home-manager/programs/dms.nix
+    ../../home-manager/programs/kanshi.nix
   ];
 
   home = {
