@@ -8,6 +8,7 @@ in
   imports = [
     ../../home/programs/kitty.nix
     ../../home/programs/zsh.nix
+    ../../home/programs/starship.nix
     ../../home/programs/neovim.nix
     ../../home/wm/mango.nix
     ../../home/wm/dms.nix
@@ -23,7 +24,7 @@ in
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    eza bat fzf zoxide tldr fastfetch mise
+    eza bat fzf zoxide tldr mise
     lazygit lazydocker git
     maple-font nerd-fonts.symbols-only
     nautilus grim slurp wl-clipboard libnotify
@@ -104,8 +105,7 @@ in
     '';
   };
 
-  # Powerlevel10k configuration
-  home.file.".p10k.zsh".source = ./../../home/programs/p10k.zsh;
+
 
   fonts.fontconfig.enable = true;
   dconf.enable = true;

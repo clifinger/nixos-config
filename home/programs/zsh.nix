@@ -44,30 +44,7 @@
       dstatus = "systemctl status docker --no-pager -l";
     };
     
-    initContent = ''
-      ZINIT_HOME="''${XDG_DATA_HOME:-''${HOME}/.local/share}/zinit/zinit.git"
-      
-      if [ ! -d "$ZINIT_HOME" ]; then
-         mkdir -p "$(dirname $ZINIT_HOME)"
-         git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-      fi
-      
-      source "''${ZINIT_HOME}/zinit.zsh"
-      
-      zinit ice depth=1; zinit light romkatv/powerlevel10k
-      zinit light zsh-users/zsh-syntax-highlighting
-      zinit light zsh-users/zsh-completions
-      zinit light zsh-users/zsh-autosuggestions
-      zinit light Aloxaf/fzf-tab
-      
-      zinit snippet OMZL::git.zsh
-      zinit snippet OMZP::git
-      zinit snippet OMZP::sudo
-      zinit snippet OMZP::command-not-found
-      
-      autoload -Uz compinit && compinit
-      zinit cdreplay -q
-      
+    initExtra = ''
       git() {
         if [ -z "$1" ]; then
           lazygit
@@ -93,36 +70,10 @@
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
       bindkey '^[w' kill-region
-      bindkey '^[[A' fzf-history-widget
-      
-      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-      zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
-      zstyle ':completion:*' menu no
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --icons $realpath 2>/dev/null || ls --color $realpath'
-      zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --color=always --icons $realpath 2>/dev/null || ls --color $realpath'
       
       eval "$(fzf --zsh)"
       eval "$(zoxide init --cmd cd zsh)"
       eval "$(mise activate zsh)"
-      
-      function prompt_nix_shell() {
-        if [[ -n "$IN_NIX_SHELL" ]]; then
-          local shell_name="''${NIX_SHELL_NAME:-nix-shell}"
-          local shell_type="$IN_NIX_SHELL"
-          p10k segment -f 208 -i '❄' -t "$shell_name $shell_type"
-        fi
-      }
-      
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-      
-      function show_fastfetch_once() {
-        if [[ -z "$IN_NIX_SHELL" ]]; then
-          fastfetch --config examples/13 --logo nixos --pipe false 2>/dev/null || fastfetch --pipe false 2>/dev/null || true
-        fi
-        precmd_functions=("''${precmd_functions[@]:#show_fastfetch_once}")
-      }
-      
-      precmd_functions+=(show_fastfetch_once)
     '';
   };
   
