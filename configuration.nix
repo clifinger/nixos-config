@@ -50,12 +50,9 @@
     (chromium.override {
       enableWideVine = true;
     })
-    kitty foot
-    wl-clipboard wl-clip-persist cliphist wlr-randr
-    bitwarden-cli jq gnupg openssh exercism
-    evtest alsa-utils
-    zsh eza bat fzf ripgrep fd
-    cloudflared
+    kitty foot wl-clipboard wl-clip-persist cliphist wlr-randr
+    bitwarden-cli jq gnupg openssh exercism evtest alsa-utils 
+    zsh eza bat fzf ripgrep fd cloudflared
     (pkgs.writeScriptBin "don" ''
       sudo systemctl start docker.socket docker.service
       echo "Docker started"
