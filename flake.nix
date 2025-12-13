@@ -50,8 +50,7 @@
                 
                 users.julien = {
                   imports = [
-                    # User configuration
-                    ./users/julien
+                    ./home-manager/julien
                     
                     # Home Manager modules from external flakes
                     mangowc.hmModules.mango

@@ -25,7 +25,7 @@ cd /etc/nixos
 # Generate your hardware config
 sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
 
-# Review and adjust users/julien/default.nix if needed
+# Review and adjust home-manager/julien/default.nix if needed
 
 # Apply the configuration
 sudo nixos-rebuild switch --flake .#nixos
@@ -65,7 +65,7 @@ environment.systemPackages = with pkgs; [
 
 **User-only:**
 ```nix
-# Edit users/julien/default.nix
+# Edit home-manager/julien/default.nix
 home.packages = with pkgs; [
   your-package
 ];
@@ -78,27 +78,24 @@ Then `rebuild`.
 ```
 .
 ├── flake.nix                  # Entry point
-├── configuration.nix          # Main system config
-├── hardware-configuration.nix # Auto-generated hardware
+├── configuration.nix          # System config
+├── hardware-configuration.nix # Auto-generated
 │
 ├── system/                    # System modules
 │   ├── boot.nix
 │   ├── audio.nix
-│   ├── wayland.nix
 │   └── ...
 │
-├── users/julien/              # Your home-manager config
-│   └── default.nix
-│
-├── home-manager/              # Home-manager modules
-│   ├── programs/             # zsh, kitty, nvim, starship
-│   └── wm/                   # mango, dms, kanshi
+├── home-manager/              # All home-manager stuff
+│   ├── julien/               # User config
+│   ├── programs/             # Shared modules (zsh, kitty, nvim)
+│   └── wm/                   # Window manager configs
 │
 └── utils/                     # Manual scripts
     └── bitwarden-keys/
 ```
 
-**Simple and flat.** All system config in `configuration.nix`, modules split by topic in `system/`.
+**Everything home-manager related is in `home-manager/`.**
 
 ## Customize
 
@@ -107,6 +104,9 @@ Edit `home-manager/programs/zsh.nix` then `rebuild`.
 
 ### Starship Prompt
 Edit `home-manager/programs/starship.nix` then `rebuild`.
+
+### User Packages
+Edit `home-manager/julien/default.nix` then `rebuild`.
 
 ### System Settings
 Edit `configuration.nix` or files in `system/` then `rebuild`.
