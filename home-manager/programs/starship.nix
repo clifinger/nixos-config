@@ -56,11 +56,9 @@
       
       nix_shell = {
         disabled = false;
-        format = "[$symbol$state]($style) ";
+        format = "[$symbol$name]($style) ";
         symbol = "❄ ";
         style = "bold yellow";
-        impure_msg = "impure";
-        pure_msg = "pure";
       };
       
       character = {
