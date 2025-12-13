@@ -1,11 +1,11 @@
 # Kanshi monitor configuration
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   services.kanshi = {
     enable = true;
     
-    systemdTarget = "graphical-session.target";
+    systemdTarget = "";
     
     settings = [
       # Profile: Dual monitor (HP Z27n 2K + Xiaomi 4K)
@@ -81,7 +81,11 @@
             status = "enable";
           }
         ];
+        profile.exec = "${pkgs.wlr-randr}/bin/wlr-randr --output eDP-1 --on --mode 2560x1600@60.000999Hz --scale 1.3 --pos 0,0";
       }
     ];
   };
+  
+  # Disable systemd service - kanshi is started directly by mango autostart
+  systemd.user.services.kanshi.Install.WantedBy = lib.mkForce [ ];
 }

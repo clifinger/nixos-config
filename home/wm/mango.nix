@@ -2,10 +2,31 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 {
+  # Systemd tray target
+  systemd.user.targets.tray = {
+    Unit = {
+      Description = "Home Manager System Tray";
+      Requires = [ "graphical-session-pre.target" ];
+    };
+  };
+
+  # Mango session target that starts graphical-session.target
+  systemd.user.targets.mango-session = {
+    Unit = {
+      Description = "mango compositor session";
+      Documentation = "man:systemd.special(7)";
+      Wants = [ "graphical-session-pre.target" "graphical-session.target" ];
+      After = [ "graphical-session-pre.target" ];
+    };
+  };
+
   wayland.windowManager.mango = {
     enable = true;
     
     settings = ''
+      # ===== Startup =====
+      exec-once=~/.config/mango/autostart.sh
+      
       # ===== Window Effects =====
       blur=1
       blur_optimized=1
@@ -263,24 +284,21 @@
     '';
     
     autostart_sh = ''
-      # # Wait for PipeWire to be ready
-      # for i in {1..30}; do
-      #   wpctl status &>/dev/null && break
-      #   sleep 0.2
-      # done
+      # Export WAYLAND_DISPLAY for services
+      systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
       
-      # XDG Desktop Portal
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots &
+      # Start kanshi for monitor configuration with delay
+      (sleep 1 && kanshi) &
       
-      # Start DankMaterialShell
-      dms run &
+      # Start DankMaterialShell with delay to ensure compositor is ready
+      (sleep 2 && dms run) &
       
       # Clipboard utilities
       wl-clip-persist --clipboard regular --reconnect-tries 0 &
       wl-paste --type text --watch cliphist store &
       
       # Start Ferdium minimized (for notifications)
-      sleep 2 && ferdium --hidden --disable-frame &
+      sleep 3 && ferdium --hidden --disable-frame &
     '';
   };
   
