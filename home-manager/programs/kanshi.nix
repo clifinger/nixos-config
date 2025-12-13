@@ -1,4 +1,3 @@
-# Kanshi monitor configuration
 { config, pkgs, lib, ... }:
 
 {
@@ -8,7 +7,6 @@
     systemdTarget = "";
     
     settings = [
-      # Profile: Dual monitor (HP Z27n 2K + Xiaomi 4K)
       {
         profile.name = "dual-hp-xiaomi";
         profile.outputs = [
@@ -33,7 +31,6 @@
         ];
       }
       
-      # Profile: HP Z27n 2K monitor only
       {
         profile.name = "hp-2k";
         profile.outputs = [
@@ -51,7 +48,6 @@
         ];
       }
       
-      # Profile: Xiaomi 4K monitor only
       {
         profile.name = "xiaomi-4k";
         profile.outputs = [
@@ -69,7 +65,6 @@
         ];
       }
       
-      # Profile: Laptop only (fallback - no external monitors)
       {
         profile.name = "laptop";
         profile.outputs = [
@@ -86,6 +81,5 @@
     ];
   };
   
-  # Disable systemd service - kanshi is started directly by mango autostart
   systemd.user.services.kanshi.Install.WantedBy = lib.mkForce [ ];
 }

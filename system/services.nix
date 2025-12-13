@@ -9,14 +9,12 @@
     enable = true;
   };
   
-  # Disable performance profile by default
   systemd.services.power-profiles-daemon.serviceConfig = {
     Environment = "PPD_DISABLE_PERFORMANCE=1";
   };
   
   services.getty.autologinUser = "julien";
   
-  # Allow users to change power profiles without password
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
       if (action.id == "net.hadess.PowerProfiles.switch-profile" &&
@@ -26,7 +24,6 @@
     });
   '';
   
-  # SSH server
   services.openssh = {
     enable = true;
     settings = {

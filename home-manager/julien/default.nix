@@ -1,4 +1,3 @@
-# User configuration for julien
 { inputs, outputs, lib, config, pkgs, ... }:
 
 let
@@ -58,7 +57,6 @@ in
   home.file.".local/bin/haskell-shell" = {
     executable = true;
     text = ''
-      #!/usr/bin/env bash
       nix-shell ~/.config/nix-shells/haskell.nix --run $SHELL
     '';
   };
@@ -84,7 +82,6 @@ in
   home.file.".local/bin/gleam-shell" = {
     executable = true;
     text = ''
-      #!/usr/bin/env bash
       nix-shell ~/.config/nix-shells/gleam.nix --run $SHELL
     '';
   };

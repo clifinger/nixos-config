@@ -27,7 +27,6 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
-      # NixOS configurations
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -39,7 +38,6 @@
               programs.mango.enable = true;
             }
             
-            # Home Manager integration
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -52,7 +50,6 @@
                   imports = [
                     ./home-manager/julien
                     
-                    # Home Manager modules from external flakes
                     mangowc.hmModules.mango
                     dms.homeModules.dankMaterialShell.default
                   ];
