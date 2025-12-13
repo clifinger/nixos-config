@@ -284,9 +284,6 @@
     '';
     
     autostart_sh = ''
-      # Export WAYLAND_DISPLAY for services
-      systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-      
       # Start kanshi for monitor configuration with delay
       (sleep 1 && kanshi) &
       
