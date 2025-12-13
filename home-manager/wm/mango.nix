@@ -304,7 +304,7 @@
   
   # Show keybindings script
   home.file.".local/bin/show-keybinds" = {
-    source = ../../scripts/show-keybinds.sh;
+    source = ./show-keybinds.sh;
     executable = true;
   };
   

@@ -94,13 +94,12 @@ Then `rebuild`.
 ├── users/julien/             # Your home-manager config
 │   └── default.nix          # Imports from home-manager/
 │
-├── home-manager/             # Reusable home-manager modules
+├── home-manager/             # Home-manager modules
 │   ├── programs/            # zsh, kitty, nvim, starship
-│   └── wm/                  # mango, dms, kanshi
+│   └── wm/                  # mango, dms, kanshi, show-keybinds
 │
-└── scripts/                  # Helper scripts
-    ├── bitwarden-keys/      # Manual utils (not auto-imported)
-    └── show-keybinds.sh     # Used by mango
+└── utils/                    # Manual utility scripts
+    └── bitwarden-keys/      # Backup/restore scripts (run manually)
 ```
 
 **Why `hosts/nixos/`?** Allows adding more machines later (desktop, server) while sharing modules from `system/` and `home-manager/`.
