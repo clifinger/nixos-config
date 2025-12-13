@@ -129,6 +129,34 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 sudo nix-collect-garbage --delete-older-than 7d
 ```
 
+## Configure Screens (Kanshi)
+
+If you have different screens, adapt the Kanshi configuration in `home-manager/programs/kanshi.nix`.
+
+**Get screen info:**
+```bash
+wlr-randr
+```
+
+**Copy the output info** (criteria, mode, position, scale) into your Kanshi profiles. Example:
+
+```nix
+{
+  profile.name = "your-setup";
+  profile.outputs = [
+    {
+      criteria = "Your Monitor Brand Model Serial";
+      scale = 1.0;
+      mode = "1920x1080@60.000000Hz";
+      position = "0,0";
+      status = "enable";
+    }
+  ];
+}
+```
+
+Then `rebuild`.
+
 ## Notes
 
 - Auto-login enabled (getty)
