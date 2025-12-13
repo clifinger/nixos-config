@@ -6,6 +6,21 @@
     systemd.enable = false;
   };
   
+  # DMS config backup (writable, so GUI changes persist)
+  # Copy initial config on first run only if files don't exist
+  home.activation.setupDmsConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    DMS_DIR="$HOME/.config/niri/dms"
+    mkdir -p "$DMS_DIR"
+    
+    # Only copy if files don't exist (preserve existing config)
+    for file in ${./dms-config}/*.kdl; do
+      filename=$(basename "$file")
+      if [ ! -f "$DMS_DIR/$filename" ]; then
+        $DRY_RUN_CMD cp "$file" "$DMS_DIR/$filename"
+      fi
+    done
+  '';
+  
   # Rofi configuration with DMS theme
   programs.rofi = {
     enable = true;
