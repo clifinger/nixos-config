@@ -84,10 +84,11 @@ Then `rebuild`.
 ├── hosts/nixos/              # System config for this machine
 │   └── default.nix          # Imports from system/
 │
-├── system/                   # System modules (split by topic)
+├── system/                   # System modules
 │   ├── boot.nix
 │   ├── networking.nix
 │   ├── audio.nix
+│   ├── wayland.nix          # Desktop environment
 │   └── ...
 │
 ├── users/julien/             # Your home-manager config
@@ -95,11 +96,11 @@ Then `rebuild`.
 │
 ├── home/                     # Reusable home-manager modules
 │   ├── programs/            # zsh, kitty, nvim, starship
-│   ├── wm/                  # mango, dms
-│   └── services/
+│   └── wm/                  # mango, dms, kanshi
 │
-├── desktop/                  # Desktop environment settings
-└── scripts/                  # Helper scripts (don, doff, etc)
+└── scripts/                  # Helper scripts
+    ├── bitwarden-keys/      # Manual utils (not auto-imported)
+    └── show-keybinds.sh     # Used by mango
 ```
 
 **Why `hosts/nixos/`?** Allows adding more machines later (desktop, server) while sharing modules from `system/` and `home/`.
@@ -141,7 +142,7 @@ sudo nix-collect-garbage --delete-older-than 7d
 
 - Auto-login enabled (getty)
 - Sudo without password for wheel group
-- Docker disabled by default (use `don`/`doff` commands)
+- Docker disabled by default (use `don`/`doff` commands from hosts/nixos/default.nix)
 - Xanmod kernel for better performance
 
 ---

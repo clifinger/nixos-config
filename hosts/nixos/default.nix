@@ -12,7 +12,7 @@
     ../../system/thinkpad.nix
     ../../system/virtualization.nix
     ../../system/power-management.nix
-    ../../desktop/wayland.nix
+    ../../system/wayland.nix
   ];
 
   networking.hostName = "nixos";
