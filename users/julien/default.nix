@@ -51,14 +51,6 @@ in
 
       shellHook = '''
         export NIX_SHELL_NAME="haskell-shell"
-        
-        echo "Haskell development environment"
-        echo "=============================="
-        echo "GHC:   $(ghc --numeric-version)"
-        echo "Cabal: $(cabal --numeric-version)"
-        echo ""
-        echo "Tools: ghc, cabal, hls, fourmolu, hlint, hoogle"
-        echo ""
       ''';
     }
   '';
@@ -85,14 +77,6 @@ in
 
       shellHook = '''
         export NIX_SHELL_NAME="gleam-shell"
-        
-        echo "Gleam development environment"
-        echo "=============================="
-        echo "Gleam:  $(gleam --version | head -1)"
-        echo "Erlang: $(erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell)"
-        echo ""
-        echo "Tools: gleam, erlang, rebar3, node"
-        echo ""
       ''';
     }
   '';
