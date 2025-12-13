@@ -92,9 +92,9 @@ Then `rebuild`.
 │   └── ...
 │
 ├── users/julien/             # Your home-manager config
-│   └── default.nix          # Imports from home/
+│   └── default.nix          # Imports from home-manager/
 │
-├── home/                     # Reusable home-manager modules
+├── home-manager/             # Reusable home-manager modules
 │   ├── programs/            # zsh, kitty, nvim, starship
 │   └── wm/                  # mango, dms, kanshi
 │
@@ -103,15 +103,15 @@ Then `rebuild`.
     └── show-keybinds.sh     # Used by mango
 ```
 
-**Why `hosts/nixos/`?** Allows adding more machines later (desktop, server) while sharing modules from `system/` and `home/`.
+**Why `hosts/nixos/`?** Allows adding more machines later (desktop, server) while sharing modules from `system/` and `home-manager/`.
 
 ## Customize
 
 ### Zsh Config
-Edit `home/programs/zsh.nix` then `rebuild`.
+Edit `home-manager/programs/zsh.nix` then `rebuild`.
 
 ### Starship Prompt
-Edit `home/programs/starship.nix` then `rebuild`.
+Edit `home-manager/programs/starship.nix` then `rebuild`.
 
 ### System Settings
 Edit files in `system/` then `rebuild`.

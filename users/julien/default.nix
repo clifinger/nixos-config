@@ -2,17 +2,17 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 
 let
-  maple-font = pkgs.callPackage ../../home/programs/maple-font.nix {};
+  maple-font = pkgs.callPackage ../../home-manager/programs/maple-font.nix {};
 in
 {
   imports = [
-    ../../home/programs/kitty.nix
-    ../../home/programs/zsh.nix
-    ../../home/programs/starship.nix
-    ../../home/programs/neovim.nix
-    ../../home/wm/mango.nix
-    ../../home/wm/dms.nix
-    ../../home/wm/kanshi.nix
+    ../../home-manager/programs/kitty.nix
+    ../../home-manager/programs/zsh.nix
+    ../../home-manager/programs/starship.nix
+    ../../home-manager/programs/neovim.nix
+    ../../home-manager/wm/mango.nix
+    ../../home-manager/wm/dms.nix
+    ../../home-manager/wm/kanshi.nix
   ];
 
   home = {
