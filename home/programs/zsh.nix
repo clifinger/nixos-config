@@ -3,14 +3,11 @@
 {
   programs.zsh = {
     enable = true;
-    
-    # Completion configuration
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     historySubstringSearch.enable = true;
     
-    # History configuration
     history = {
       size = 5000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -22,7 +19,6 @@
       extended = true;
     };
     
-    # Default options
     defaultKeymap = "emacs";
     
     envExtra = ''
@@ -35,9 +31,7 @@
       XCURSOR_SIZE = "36";
     };
     
-    # Shell aliases
     shellAliases = {
-      # Modern CLI replacements
       ls = "eza -a --icons=always";
       ll = "eza -al --icons=always";
       lt = "eza -a --tree --level=1 --icons=always";
@@ -45,18 +39,12 @@
       vim = "nvim";
       c = "clear";
       man = "tldr";
-      
-      # System management
       shutdown = "systemctl poweroff";
       rebuild = "cd ~/nixos-config && sudo nixos-rebuild switch --flake .#nixos";
-      
-      # Docker management
       dstatus = "systemctl status docker --no-pager -l";
     };
     
-    # Additional shell configuration
     initContent = ''
-      # Zinit plugin manager setup
       ZINIT_HOME="''${XDG_DATA_HOME:-''${HOME}/.local/share}/zinit/zinit.git"
       
       if [ ! -d "$ZINIT_HOME" ]; then
@@ -66,28 +54,20 @@
       
       source "''${ZINIT_HOME}/zinit.zsh"
       
-      # Powerlevel10k theme
       zinit ice depth=1; zinit light romkatv/powerlevel10k
-      
-      # Essential zsh plugins
       zinit light zsh-users/zsh-syntax-highlighting
       zinit light zsh-users/zsh-completions
       zinit light zsh-users/zsh-autosuggestions
       zinit light Aloxaf/fzf-tab
       
-      # Oh-My-Zsh snippets
       zinit snippet OMZL::git.zsh
       zinit snippet OMZP::git
       zinit snippet OMZP::sudo
       zinit snippet OMZP::command-not-found
       
-      # Reload completions
       autoload -Uz compinit && compinit
       zinit cdreplay -q
       
-      # Custom functions
-      
-      # Git wrapper: launch lazygit when called without arguments
       git() {
         if [ -z "$1" ]; then
           lazygit
@@ -96,7 +76,6 @@
         fi
       }
       
-      # Docker wrapper: launch lazydocker when called without arguments
       docker() {
         if [ -z "$1" ]; then
           lazydocker
@@ -105,33 +84,27 @@
         fi
       }
       
-      # Neovim wrapper: adjust kitty padding dynamically
       nvim() {
         kitty @ set-spacing padding=0 margin=0 2>/dev/null || true
         command nvim "$@"
         kitty @ set-spacing padding=10 margin=0 2>/dev/null || true
       }
       
-      # Keybindings
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
       bindkey '^[w' kill-region
       bindkey '^[[A' fzf-history-widget
       
-      # Completion styling
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
       zstyle ':completion:*' menu no
       zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --icons $realpath 2>/dev/null || ls --color $realpath'
       zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --color=always --icons $realpath 2>/dev/null || ls --color $realpath'
       
-      # Shell integrations
       eval "$(fzf --zsh)"
       eval "$(zoxide init --cmd cd zsh)"
       eval "$(mise activate zsh)"
       
-      # Nix shell indicator - custom prompt segment
-      # Display shell name with impure/pure status on the right
       function prompt_nix_shell() {
         if [[ -n "$IN_NIX_SHELL" ]]; then
           local shell_name="''${NIX_SHELL_NAME:-nix-shell}"
@@ -140,24 +113,18 @@
         fi
       }
       
-      # Load Powerlevel10k configuration
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       
-      # Display fastfetch after instant prompt finishes (but not in nix-shell)
       function show_fastfetch_once() {
         if [[ -z "$IN_NIX_SHELL" ]]; then
           fastfetch --config examples/13 --logo nixos --pipe false 2>/dev/null || fastfetch --pipe false 2>/dev/null || true
         fi
-        # Remove this function so it only runs once
         precmd_functions=("''${precmd_functions[@]:#show_fastfetch_once}")
       }
       
-      # Add to precmd (runs after instant prompt)
       precmd_functions+=(show_fastfetch_once)
     '';
   };
   
-  # XDG directories
   xdg.enable = true;
 }
-
