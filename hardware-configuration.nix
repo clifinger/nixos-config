@@ -9,6 +9,10 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ 
+    "usbcore.usbfs_memory_mb=128"
+    "usbcore.autosuspend=-1"
+  ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/2ed81abd-c390-407a-81c7-47ce9dfe0653";
