@@ -13,6 +13,7 @@
     ./system/virtualization.nix
     ./system/power-management.nix
     ./system/wayland.nix
+    ./system/graphics.nix
     ./system/chromium.nix
   ];
 
@@ -44,6 +45,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  hardware.enableRedistributableFirmware = true;
 
   environment.systemPackages = with pkgs; [
     vim nano git wget curl
