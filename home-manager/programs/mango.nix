@@ -204,12 +204,8 @@
       # Cycle layouts
       bind=SUPER,n,switch_layout
       
-      # Screenshot full screen
-      bind=CTRL,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Saved: $filename"
-      # Screenshot area to file
-      bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
+
       # Screenshot area to clipboard
-      bind=SUPER+SHIFT,Print,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
       bind=SUPER+SHIFT,s,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
       
       # Media keys (no comments - will be hidden from viewer)
