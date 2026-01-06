@@ -3,6 +3,7 @@
 {
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
@@ -23,6 +24,8 @@
     
     envExtra = ''
       export PATH="$HOME/.local/bin:$PATH"
+      export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+      export SSL_CERT_DIR=/etc/ssl/certs
     '';
     
     sessionVariables = {

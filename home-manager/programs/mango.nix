@@ -122,6 +122,7 @@
       bind=SUPER,d,spawn,dms ipc call dash toggle overview
       # Application launcher
       bind=ALT,space,spawn,dms ipc call spotlight toggle
+      bind=none,XF86Search,spawn,dms ipc call spotlight toggle
       # Clipboard manager
       bind=SUPER,v,spawn,dms ipc call clipboard toggle
       # Notification center
@@ -209,6 +210,7 @@
       bind=SUPER,Print,spawn_shell,filename="screenshot-$(date +%Y%m%d-%H%M%S).png" && grim -g "$(slurp)" ${config.home.homeDirectory}/Pictures/$filename && notify-send "Screenshot" "Area saved: $filename"
       # Screenshot area to clipboard
       bind=SUPER+SHIFT,Print,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
+      bind=SUPER+SHIFT,s,spawn_shell,grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Area copied to clipboard"
       
       # Media keys (no comments - will be hidden from viewer)
       bind=none,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
