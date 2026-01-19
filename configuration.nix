@@ -15,6 +15,8 @@
     ./system/wayland.nix
     ./system/graphics.nix
     ./system/chromium.nix
+    ./system/flatpak.nix
+    ./system/nix-ld.nix
   ];
 
   networking.hostName = "nixos";

@@ -18,6 +18,11 @@ in
     username = "julien";
     homeDirectory = "/home/julien";
     stateVersion = "24.11";
+    
+    # Add Flatpak exports to XDG_DATA_DIRS for launcher integration
+    sessionVariables = {
+      XDG_DATA_DIRS = "$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS";
+    };
   };
 
   programs.home-manager.enable = true;
@@ -30,7 +35,31 @@ in
     rofi  # Application launcher and dmenu
     ferdium
     kanshi wlr-randr
+    nodejs
+    # anytype - installed via Flatpak (io.anytype.anytype) due to build issues in nixpkgs
   ];
+
+  # OpenCode wrapper - direct npx without FHS isolation to allow sudo
+  home.file.".local/bin/opencode" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      # Set up environment for npx
+      export PATH="${pkgs.nodejs}/bin:${pkgs.git}/bin:${pkgs.gcc}/bin:$PATH"
+      
+      # Run opencode via npx
+      exec ${pkgs.nodejs}/bin/npx -y opencode-ai "$@"
+    '';
+  };
+
+  # Anytype wrapper for Flatpak
+  home.file.".local/bin/anytype" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      exec flatpak run io.anytype.anytype "$@"
+    '';
+  };
 
   home.file.".config/nix-shells/haskell.nix".text = ''
     { pkgs ? import <nixpkgs> {} }:
@@ -151,5 +180,11 @@ in
     pinentry.package = pkgs.pinentry-gnome3;
     defaultCacheTtl = 345600;
     maxCacheTtl = 345600;
+  };
+
+  # Enable gnome-keyring for secret storage (required by Anytype)
+  services.gnome-keyring = {
+    enable = true;
+    components = [ "secrets" ];
   };
 }
