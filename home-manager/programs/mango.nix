@@ -89,6 +89,18 @@
       windowrule=allow_csd:0,appid:ferdium
       windowrule=isfloating:1,title:^rofi
       
+      # XDG Desktop Portal dialogs (screen sharing, file picker, etc)
+      windowrule=isfloating:1,title:^.*portal.*
+      windowrule=isfloating:1,appid:^xdg-desktop-portal.*
+      windowrule=isfloating:1,title:^.*Sharing Indicator.*
+      windowrule=isfloating:1,title:^.*Choose.*
+      windowrule=isfloating:1,title:^.*Select.*
+      
+      # Chrome/Chromium screen sharing popup
+      windowrule=isfloating:1,title:^.*sharing your screen.*
+      windowrule=isfloating:1,title:^Chrome is sharing.*
+      windowrule=isfloating:1,title:^Chromium is sharing.*
+      
       # ===== Workspace Layout =====
       tagrule=id:1,layout_name:scroller
       tagrule=id:2,layout_name:scroller
