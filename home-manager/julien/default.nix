@@ -182,6 +182,14 @@ in
     maxCacheTtl = 345600;
   };
 
+  # Configure SSH key to be loaded by gpg-agent
+  # This allows automatic SSH key loading without interfering with GPG
+  home.file.".gnupg/sshcontrol".text = ''
+    # SSH key automatically managed by home-manager
+    # Keygrip for ~/.ssh/id_ed25519
+    487032E9E969DE4C8064C28343E87CEB6652D33A 0
+  '';
+
   # Enable gnome-keyring for secret storage (required by Anytype)
   services.gnome-keyring = {
     enable = true;
