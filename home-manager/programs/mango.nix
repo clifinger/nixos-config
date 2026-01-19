@@ -96,10 +96,16 @@
       windowrule=isfloating:1,title:^.*Choose.*
       windowrule=isfloating:1,title:^.*Select.*
       
-      # Chrome/Chromium screen sharing popup
+      # Chrome/Chromium screen sharing popup - multiple approaches
+      windowrule=isfloating:1,title:meet.google.com is sharing your screen.
+      windowrule=isfloating:1,title:*is sharing your screen*
+      windowrule=isfloating:1,title:*sharing your screen*
       windowrule=isfloating:1,title:^.*sharing your screen.*
+      windowrule=isfloating:1,title:^.*is sharing your screen.*
       windowrule=isfloating:1,title:^Chrome is sharing.*
       windowrule=isfloating:1,title:^Chromium is sharing.*
+      windowrule=isfloating:1,appid:chrome-sharing-indicator
+      windowrule=isfloating:1,appid:chromium-sharing-indicator
       
       # ===== Workspace Layout =====
       tagrule=id:1,layout_name:scroller
